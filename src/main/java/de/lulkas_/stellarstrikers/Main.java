@@ -14,6 +14,7 @@ import java.time.ZoneId;
 
 public class Main {
     public static final int GAME_ID = 956256;
+    //SecretStuff not in the public repo (it's secret)
     public static final String GAME_PRIVATE_KEY = SecretStuff.GAME_KEY;
     public static final Image icon = importImage("/textures/icon.png");
     public static Game game;
