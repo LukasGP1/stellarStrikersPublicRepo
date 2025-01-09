@@ -1,0 +1,14 @@
+Spaceship textures https://fearless-design.itch.io/tiny-ships-free-spaceships by Fearless Design https://fearless-design.itch.io downloaded on the 12.12.2024
+Level up sound from pixabay https://pixabay.com/sound-effects/in-game-level-uptype-2-230567/ by RibhavAgrawal https://pixabay.com/users/ribhavagrawal-39286533/ downloaded at 18.12.2024
+Shooting Sound from pixabay https://pixabay.com/sound-effects/retro-laser-1-236669/ by Driken5482 https://pixabay.com/users/driken5482-45721595/ downloaded at 20.12.2024
+clicking sound from mixkit "Modern technology select" https://mixkit.co/free-sound-effects/click/ downloaded at 20.12.2024
+error sound from mixkit "Game show buzz in" https://mixkit.co/free-sound-effects/error/ downloaded at 20.12.2024
+library for easier use of the gamejolt api https://github.com/ashleygwinnell/Game-Jolt-Java-Game-API by Ashley Gwinnell https://github.com/ashleygwinnell under CC Attribution-ShareAlike 3.0 Licence http://creativecommons.org/licenses/by-sa/3.0/legalcode
+Breaking sound from pixabay https://pixabay.com/sound-effects/breaking-glass-83809/ by freesound_community https://pixabay.com/users/freesound_community-46691455/ downloaded at 12.22.2024
+first ding sound effect from pixabay https://pixabay.com/sound-effects/ding-126626/ by u_31vnwfmzt6 https://pixabay.com/users/u_31vnwfmzt6-31480456/ downloaded at 12.22.2024
+second ding sound effect from pixabay https://pixabay.com/sound-effects/ding-101492/ by freesound_community https://pixabay.com/users/freesound_community-46691455/ downloaded at 12.27.24
+win sound effect from mixkit "Game level completed" https://mixkit.co/free-sound-effects/game-over/ downloaded at 12.22.2024
+lose sound part 1 from mixkit "Spaceship system break down" https://mixkit.co/free-sound-effects/game-over/ downloaded at 12.22.2024
+lose sound part 2 from mixkit "Arcade video game explosion" https://mixkit.co/free-sound-effects/game-over/ downloaded at 12.22.2024
+background music created by Tobias
+jogl api for access to opengl by jogamp under New BSD 2-Clause License see bsd2.txt
