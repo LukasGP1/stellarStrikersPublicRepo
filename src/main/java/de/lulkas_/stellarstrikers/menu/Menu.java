@@ -21,13 +21,11 @@ public abstract class Menu {
     private MouseEvent lastProcessedClick = null;
     protected GamePanel gamePanel;
     public DisplayHandler displayHandler;
-    public int xShifted;
-    public float yScale;
 
     protected void importImage() {
         InputStream is = getClass().getResourceAsStream(this.path);
         try {
-            img = ImageIO.read(is).getScaledInstance(Main.game.window.getWidth(), Main.game.window.getHeight(), Image.SCALE_DEFAULT);
+            img = ImageIO.read(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +46,7 @@ public abstract class Menu {
     protected abstract DisplayHandler createDisplayHandler();
 
     public Graphics draw(Graphics g) {
-        g.drawImage(img.getScaledInstance(Main.game.window.getHeight(), Main.game.window.getHeight(), Image.SCALE_DEFAULT), xShifted, 0, null);
+        g.drawImage(img.getScaledInstance(Main.game.window.getWidth(), Main.game.window.getHeight(), Image.SCALE_DEFAULT), 0, 0, null);
         g = displayHandler.draw(g);
 
         for(Clickable clickable : clickables) {
@@ -59,16 +57,6 @@ public abstract class Menu {
     }
 
     public void tick() {
-        xShifted = (Main.game.window.getWidth() - 960) / 2;
-        yScale = Main.game.window.getHeight() / 960f;
-        displayHandler.setxShifted(xShifted);
-        displayHandler.setyScale(yScale);
-
-        for(int i = 0; i < clickables.size(); i++) {
-            clickables.get(i).setXShifted(xShifted);
-            clickables.get(i).setYScale(yScale);
-        }
-
         if(gamePanel.lastClick != this.lastProcessedClick) {
             processedLastClick = false;
         }

@@ -1,10 +1,9 @@
-package de.lulkas_.stellarstrikers.level;
+package de.lulkas_.stellarstrikers.level.enemys;
 
 import de.lulkas_.stellarstrikers.GamePanel;
 import de.lulkas_.stellarstrikers.Main;
-import de.lulkas_.stellarstrikers.level.enemys.Boss;
-import de.lulkas_.stellarstrikers.level.enemys.Enemy;
-import de.lulkas_.stellarstrikers.level.enemys.EnemyWaveHandler;
+import de.lulkas_.stellarstrikers.level.Entity;
+import de.lulkas_.stellarstrikers.level.LevelFileFormatException;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class WaveSpawnHandler {
                     lastReadIndex++;
                 }
 
-                float x = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex)) * Main.game.window.getWidth();
+                float x = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex));
 
                 firstReadIndex = lastReadIndex + 1;
                 lastReadIndex = firstReadIndex;
@@ -58,7 +57,7 @@ public class WaveSpawnHandler {
                     lastReadIndex++;
                 }
 
-                float y = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex)) * gamePanel.gameMenu.yScale;
+                float y = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex));
 
                 firstReadIndex = lastReadIndex + 1;
                 lastReadIndex = firstReadIndex;
@@ -67,7 +66,7 @@ public class WaveSpawnHandler {
                     lastReadIndex++;
                 }
 
-                float speed = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex)) * (Main.game.window.getWidth() / 960);
+                float speed = Float.parseFloat(enemy.substring(firstReadIndex, lastReadIndex));
 
                 firstReadIndex = lastReadIndex + 1;
                 lastReadIndex = firstReadIndex;
@@ -124,7 +123,7 @@ public class WaveSpawnHandler {
                 type = Boss.BossType.GUNNER;
             }
 
-            toReturn.add(new Boss((float) (0.4 * Main.game.window.getWidth()), 300 * gamePanel.gameMenu.yScale, (wave / 5) * 25, 3.0f * (Main.game.window.getWidth() / 960), gamePanel, type));
+            toReturn.add(new Boss(400, 300, (wave / 5) * 25, 3.0f, gamePanel, type));
         } else {
             Enemy.EnemyType type1 = Enemy.EnemyType.NORMAL;
             Enemy.EnemyType type2 = Enemy.EnemyType.NORMAL;
@@ -134,11 +133,11 @@ public class WaveSpawnHandler {
             if(wave > 10) {
                 type1 = Enemy.EnemyType.GUNNER;
             }
-            toReturn.add(new Enemy((float) (0.2 * Main.game.window.getWidth()), 400 * gamePanel.gameMenu.yScale, 0.1f * (Main.game.window.getWidth() / 960), 2 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy((float) (0.42 * Main.game.window.getWidth()), 400 * gamePanel.gameMenu.yScale, 0.1f * (Main.game.window.getWidth() / 960), 3 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy((float) (0.63 * Main.game.window.getWidth()), 400 * gamePanel.gameMenu.yScale, 0.1f * (Main.game.window.getWidth() / 960), 2 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy((float) (0.52 * Main.game.window.getWidth()), 200 * gamePanel.gameMenu.yScale, 0.1f * (Main.game.window.getWidth() / 960), 1 + wave - 3, gamePanel, type2));
-            toReturn.add(new Enemy((float) (0.31 * Main.game.window.getWidth()), 200 * gamePanel.gameMenu.yScale, 0.1f * (Main.game.window.getWidth() / 960), 1 + wave - 3, gamePanel, type2));
+            toReturn.add(new Enemy(200, 400, 0.1f, 2 + wave - 3, gamePanel, type1));
+            toReturn.add(new Enemy(420, 400, 0.1f, 3 + wave - 3, gamePanel, type1));
+            toReturn.add(new Enemy(630, 400, 0.1f, 2 + wave - 3, gamePanel, type1));
+            toReturn.add(new Enemy(520, 200, 0.1f, 1 + wave - 3, gamePanel, type2));
+            toReturn.add(new Enemy(310, 200, 0.1f, 1 + wave - 3, gamePanel, type2));
         }
 
         return toReturn;

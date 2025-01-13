@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class LostMenu extends Menu {
     public LostMenu(GamePanel gamePanel) {
-        super("/textures/menu/lost_menu.png", gamePanel);
-        addButton(new Button(new Rectangle(0, 0, 960, 960), () -> gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU));
+        super("/assets/textures/menu/lost_menu.png", gamePanel);
+        addButton(new Button(new Rectangle(0, 0, 1000, 1000), () -> gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU));
     }
 
     @Override

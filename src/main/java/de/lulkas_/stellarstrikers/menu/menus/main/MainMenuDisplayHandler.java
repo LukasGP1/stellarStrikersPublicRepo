@@ -13,8 +13,8 @@ public class MainMenuDisplayHandler extends DisplayHandler {
 
     public MainMenuDisplayHandler(PlayerAttributeHandler playerAttributeHandler) {
         this.playerAttributeHandler = playerAttributeHandler;
-        addDisplay(new IntDisplay("Score: ", 400, 200, 48, Color.WHITE, "", () -> (this.playerAttributeHandler.score)));
-        addDisplay(new ThreeIntDisplay(Color.WHITE, 48, 400, 130, "Level: ", this.playerAttributeHandler::getLevel, " (", () -> this.playerAttributeHandler.score, " out of ", () -> this.playerAttributeHandler.levelingCost, ")"));
-        addDisplay(new TemporaryIntDisplay("You can now play up to wave ", 125, 30, 48, Color.GREEN, "", () -> playerAttributeHandler.getLevel() + 2));
+        addDisplay(new IntDisplay("Score: ", 400, 200, 48, Color.WHITE, "", () -> (this.playerAttributeHandler.score), 4, 150, 50));
+        addDisplay(new ThreeIntDisplay(Color.WHITE, 48, 400, 130, "Level: ", this.playerAttributeHandler::getLevel, " (", () -> this.playerAttributeHandler.score, " out of ", () -> this.playerAttributeHandler.levelingCost, ")", 4, 350, 50));
+        addDisplay(new TemporaryIntDisplay("You can now play up to wave ", 400, 30, 48, Color.GREEN, "", () -> playerAttributeHandler.getLevel() + 2, 3, 400, 50));
     }
 }

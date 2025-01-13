@@ -18,7 +18,7 @@ public class GameWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         gamePanel = new GamePanel(api);
-        gamePanel.setBounds(0, 0, 960, 960);
+        gamePanel.setBounds(0, 0, 1000, 1000);
         gamePanel.setOpaque(false);
         gamePanel.setFocusable(true);
         gamePanel.requestFocusInWindow();
@@ -35,7 +35,7 @@ public class GameWindow extends JFrame {
         layeredPane.add(shaderPanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(gamePanel, JLayeredPane.PALETTE_LAYER);
 
-        this.setSize(960, 960);
+        this.setSize(1280, 720);
         this.getContentPane().add(layeredPane);
         this.setLocationRelativeTo(null);
         this.setResizable(true);

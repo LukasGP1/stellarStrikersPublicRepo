@@ -1,5 +1,7 @@
 package de.lulkas_.stellarstrikers.menu.button;
 
+import de.lulkas_.stellarstrikers.util.CoordConversion;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
@@ -9,24 +11,22 @@ public class SwitchButton implements Clickable {
     private final Image img1;
     private final Image img2;
     private boolean state;
-    private final Rectangle originalClickingArea;
+    private final Rectangle gameClickingArea;
+    private Rectangle screenClickingArea;
     private final Runnable whenClicked;
-    private int xShifted;
-    private float yScale;
 
-    public SwitchButton(Rectangle originalClickingArea, Runnable whenClicked, String path1, String path2, boolean state) {
-        this.originalClickingArea = originalClickingArea;
+    public SwitchButton(Rectangle gameClickingArea, Runnable whenClicked, String path1, String path2, boolean state) {
+        this.gameClickingArea = gameClickingArea;
         this.whenClicked = whenClicked;
         this.img1 = importImage(path1);
         this.img2 = importImage(path2);
         this.state = state;
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override
     public Rectangle getClickingArea() {
-        Rectangle toReturn = new Rectangle(originalClickingArea);
-        toReturn.setBounds(((int) (xShifted + originalClickingArea.x * yScale)), ((int) (originalClickingArea.y * yScale)), ((int) (originalClickingArea.width * yScale)), ((int) (originalClickingArea.height * yScale)));
-        return toReturn;
+        return screenClickingArea;
     }
 
     @Override
@@ -35,18 +35,8 @@ public class SwitchButton implements Clickable {
     }
 
     @Override
-    public void setXShifted(int value) {
-        xShifted = value;
-    }
-
-    @Override
-    public void setYScale(float value) {
-        yScale = value;
-    }
-
-    @Override
     public void tick() {
-
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override
@@ -67,7 +57,7 @@ public class SwitchButton implements Clickable {
     protected Image importImage(String path) {
         InputStream is = getClass().getResourceAsStream(path);
         try {
-            return ImageIO.read(is).getScaledInstance(this.originalClickingArea.width, this.originalClickingArea.height, Image.SCALE_DEFAULT);
+            return ImageIO.read(is);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

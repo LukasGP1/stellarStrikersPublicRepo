@@ -11,30 +11,30 @@ import java.awt.*;
 
 public class SkinMenu extends Menu {
     public SkinMenu(GamePanel gamePanel) {
-        super("/textures/menu/skin_menu.png", gamePanel);
+        super("/assets/textures/menu/skin_menu.png", gamePanel);
 
-        addButton(new Button(new Rectangle(130, 750, 700, 100), () -> {
+        addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(130, 200, 70, 50), () -> {
+        addButton(new Button(new Rectangle(280, 189, 46, 56), () -> {
             gamePanel.skinDisplay.shiftLeft();
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(750, 200, 70, 50), () -> {
+        addButton(new Button(new Rectangle(669, 191, 46, 56), () -> {
             gamePanel.skinDisplay.shiftRight();
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(130, 600, 700, 100), () -> {
+        addButton(new Button(new Rectangle(280, 632, 439, 113), () -> {
             if(gamePanel.playerAttributeHandler.getLevel() >= gamePanel.skinDisplay.displayed) {
                 gamePanel.playerAttributeHandler.setSkinDisplayed(gamePanel.skinDisplay.displayed);
-                SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+                SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             } else {
                 ((TemporaryIntDisplay) displayHandler.displays.get(0)).appear(300);
-                SoundHandler.playSound("/sounds/menu/error.wav", -2f, gamePanel);
+                SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
             }
         }));
     }

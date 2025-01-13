@@ -6,8 +6,8 @@ public class TemporaryDisplay extends Display {
     private int ticks;
     public boolean visible = false;
 
-    public TemporaryDisplay(Color color, int size, int x, int y, String text) {
-        super(color, size, x, y, text);
+    public TemporaryDisplay(Color color, int fontSize, int gameX, int gameY, String text, int gameWidth, int gameHeight) {
+        super(color, fontSize, gameX, gameY, text, gameWidth, gameHeight);
     }
 
     public void appear(int ticks) {

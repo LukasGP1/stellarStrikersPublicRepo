@@ -15,7 +15,7 @@ public abstract class Textured extends Entity {
     protected Image importImage(String path) {
         InputStream is = getClass().getResourceAsStream(path);
         try {
-            return ImageIO.read(is).getScaledInstance(this.width, this.height, Image.SCALE_DEFAULT);
+            return ImageIO.read(is).getScaledInstance(this.gameWidth, this.gameHeight, Image.SCALE_DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -29,8 +29,10 @@ public abstract class Textured extends Entity {
         img = importImage(this.path);
     }
 
+    @Override
     public Graphics draw(Graphics g) {
-        g.drawImage(img, ((int) x), ((int) y), null);
+        g = super.draw(g);
+        g.drawImage(img.getScaledInstance(((int) screenSize[0]), ((int) screenSize[1]), Image.SCALE_DEFAULT), ((int) screenCoords[0]), ((int) screenCoords[1]), null);
         return g;
     }
 }

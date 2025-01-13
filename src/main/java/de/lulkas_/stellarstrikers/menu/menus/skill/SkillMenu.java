@@ -11,18 +11,18 @@ import java.awt.*;
 
 public class SkillMenu extends Menu {
     public SkillMenu(GamePanel gamePanel) {
-        super("/textures/menu/skill_menu.png", gamePanel);
+        super("/assets/textures/menu/skill_menu.png", gamePanel);
 
-        addButton(new Button(new Rectangle(130, 750, 700, 100), () -> {
+        addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(130, 400, 200, 300), this::upgradeIncome));
-        addButton(new Button(new Rectangle(380, 400, 200, 300), this::upgradeDamage));
-        addButton(new Button(new Rectangle(630, 400, 200, 300), this::upgradeHealth));
+        addButton(new Button(new Rectangle(281, 410, 124, 335), this::upgradeIncome));
+        addButton(new Button(new Rectangle(436, 410, 124, 335), this::upgradeDamage));
+        addButton(new Button(new Rectangle(593, 410, 124, 335), this::upgradeHealth));
 
-        addButton(new Button(new Rectangle(130, 300, 700, 80), this::resetSkills));
+        addButton(new Button(new Rectangle(280, 300, 439, 90), this::resetSkills));
     }
 
     private void resetSkills() {
@@ -36,10 +36,10 @@ public class SkillMenu extends Menu {
         if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
             gamePanel.playerSkillHandler.upgradeIncome(1);
             gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             gamePanel.saveWriter.save();
         } else {
-            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }
@@ -48,10 +48,10 @@ public class SkillMenu extends Menu {
         if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
             gamePanel.playerSkillHandler.upgradeDamage(1);
             gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             gamePanel.saveWriter.save();
         } else {
-            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }
@@ -60,10 +60,10 @@ public class SkillMenu extends Menu {
         if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
             gamePanel.playerSkillHandler.upgradeHealth(1);
             gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             gamePanel.saveWriter.save();
         } else {
-            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }

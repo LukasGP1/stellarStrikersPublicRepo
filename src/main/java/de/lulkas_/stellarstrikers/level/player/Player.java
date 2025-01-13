@@ -9,6 +9,7 @@ import de.lulkas_.stellarstrikers.level.enemys.Boss;
 import de.lulkas_.stellarstrikers.level.enemys.Enemy;
 import de.lulkas_.stellarstrikers.level.projectile.Bullet;
 import de.lulkas_.stellarstrikers.sound.SoundHandler;
+import de.lulkas_.stellarstrikers.util.CoordConversion;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,20 +28,20 @@ public class Player extends Textured {
     public int maxBulletCooldown = 500;
 
     public Player(float speed, GamePanel gamePanel, float startX, float startY, boolean invincible, PlayerSkillHandler playerSkillHandler, int skin) {
-        super(startX, startY, "/textures/player/" + (skin + 1) + ".png", 64, 52, playerSkillHandler.getHealth(), gamePanel);
+        super(startX, startY, "/assets/textures/player/" + (skin + 1) + ".png", 53, 78, playerSkillHandler.getHealth(), gamePanel);
         this.speed = speed;
         this.gamePanel = gamePanel;
         this.invincible = invincible;
         this.playerSkillHandler = playerSkillHandler;
-        damage1 = importImage("/textures/player/damage_overlay_1.png");
-        damage2 = importImage("/textures/player/damage_overlay_2.png");
-        empty = importImage("/textures/player/empty.png");
+        damage1 = importImage("/assets/textures/player/damage_overlay_1.png");
+        damage2 = importImage("/assets/textures/player/damage_overlay_2.png");
+        empty = importImage("/assets/textures/player/empty.png");
     }
 
     @Override
     public Graphics draw(Graphics g) {
         g = super.draw(g);
-        g.drawImage(getDamageOverlay(), ((int) this.x), ((int) this.y), null);
+        g.drawImage(getDamageOverlay().getScaledInstance(((int) screenSize[0]), ((int) screenSize[1]), Image.SCALE_DEFAULT), ((int) screenCoords[0]), ((int) screenCoords[1]), null);
         g = drawBullets(g);
         return g;
     }
@@ -61,17 +62,17 @@ public class Player extends Textured {
 
         this.maxBulletCooldown = gamePanel.playerPowerUpHandler.getMaxBulletCooldown();
 
-        if(this.gamePanel.getKeyboardInputs().isaPressed() && this.x - this.speed >= 0){
-            this.x -= this.speed;
+        if(this.gamePanel.getKeyboardInputs().isaPressed() && this.gameX - this.speed >= 0){
+            this.gameX -= this.speed;
         }
 
-        if(this.gamePanel.getKeyboardInputs().isdPressed() && this.x + this.speed <= Main.game.window.getWidth() - 64){
-            this.x += this.speed;
+        if(this.gamePanel.getKeyboardInputs().isdPressed() && this.gameX + this.speed <= 930){
+            this.gameX += this.speed;
         }
 
         if(this.gamePanel.getKeyboardInputs().isSpacePressed() && this.bulletCooldown <= 0) {
-            this.bullets.add(new Bullet(this.x + 32, this.y, -5.0f * gamePanel.gameMenu.yScale, 0, this, gamePanel, gamePanel.playerOptionsHandler.getPlayerBulletColor()));
-            SoundHandler.playSound("/sounds/level/shoot_player.wav", -20f, gamePanel);
+            this.bullets.add(new Bullet(this.gameX + this.gameWidth / 2f, this.gameY, -5.0f, 0, this, gamePanel, gamePanel.playerOptionsHandler.getPlayerBulletColor()));
+            SoundHandler.playSound("/assets/sounds/level/shoot_player.wav", -20f, gamePanel);
             this.bulletCooldown = maxBulletCooldown;
         }
 
@@ -96,9 +97,9 @@ public class Player extends Textured {
 
     @Override
     public void collideWith(Entity entity) {
-        if(!this.invincible) this.health -= 1;
+        if(!this.invincible && !entity.dead) this.health -= 1;
         entity.dead = true;
-        SoundHandler.playSound("/sounds/level/break.wav", -2f, gamePanel);
+        SoundHandler.playSound("/assets/sounds/level/break.wav", -2f, gamePanel);
     }
 
     private void updateBullets() {

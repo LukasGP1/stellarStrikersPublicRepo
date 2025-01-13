@@ -6,8 +6,10 @@ uniform float u_time;
 uniform int spawnTicks;
 uniform vec2 resolution;
 
-float random(vec2 st) {
-    return fract(fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123) * 48954.12594);
+float random( in vec2 x ) {
+    float xhash = cos( x.x * 37.0 );
+    float yhash = cos( x.y * 57.0 );
+    return fract( 415.92653 * ( xhash + yhash ) );
 }
 
 void main() {

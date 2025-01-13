@@ -10,11 +10,11 @@ import java.awt.*;
 
 public class CreditsMenu extends Menu {
     public CreditsMenu(GamePanel gamePanel) {
-        super("/textures/menu/credits_menu.png", gamePanel);
+        super("/assets/textures/menu/credits_menu.png", gamePanel);
 
-        addButton(new Button(new Rectangle(130, 750, 700, 100), () -> {
+        addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
     }
 

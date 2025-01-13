@@ -1,6 +1,7 @@
 package de.lulkas_.stellarstrikers.menu.menus.skin;
 
 import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.util.CoordConversion;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,18 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkinDisplay {
-    private final int x, y;
+    private final int gameX, gameY;
+    private int screenX, screenY;
+    private final int gameWidth, gameHeight;
+    private int screenWidth, screenHeight;
     private final List<Image> images = new ArrayList<>();
     private final Image lock;
     public int displayed;
     private final GamePanel gamePanel;
 
-    public SkinDisplay(int x, int y, List<String> imagePaths, int displayed, String lockPath, GamePanel gamePanel) {
-        this.x = x;
-        this.y = y;
+    public SkinDisplay(int gameX, int gameY, List<String> imagePaths, int displayed, String lockPath, GamePanel gamePanel) {
+        this.gameX = gameX;
+        this.gameY = gameY;
         this.displayed = displayed;
         this.lock = importImage(lockPath);
         this.gamePanel = gamePanel;
+
+        gameWidth = 53;
+        gameHeight = 78;
 
         for(String path : imagePaths) {
             images.add(importImage(path));
@@ -31,7 +38,7 @@ public class SkinDisplay {
     protected Image importImage(String path) {
         InputStream is = getClass().getResourceAsStream(path);
         try {
-            return ImageIO.read(is).getScaledInstance(64, 52, Image.SCALE_DEFAULT);
+            return ImageIO.read(is);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -53,9 +60,17 @@ public class SkinDisplay {
     }
 
     public Graphics draw(Graphics g) {
-        g.drawImage(images.get(displayed), x,  y, null);
+        float[] screenCoords = CoordConversion.gameToScreen(new Float[]{((float) gameX), ((float) gameY)});
+        screenX = ((int) screenCoords[0]);
+        screenY = ((int) screenCoords[1]);
+
+        float[] screenSize = CoordConversion.gameToScreen(new Float[]{((float) gameWidth), ((float) gameHeight)});
+        screenWidth = ((int) screenSize[0]);
+        screenHeight = ((int) screenSize[1]);
+
+        g.drawImage(images.get(displayed).getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX, screenY, null);
         if(gamePanel.playerAttributeHandler.getLevel() < displayed) {
-            g.drawImage(lock, x, y, null);
+            g.drawImage(lock.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX, screenY, null);
         }
         return g;
     }

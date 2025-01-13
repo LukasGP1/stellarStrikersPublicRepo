@@ -9,8 +9,8 @@ import java.awt.*;
 
 public class WonMenu extends Menu {
     public WonMenu(GamePanel gamePanel) {
-        super("/textures/menu/won_menu.png", gamePanel);
-        addButton(new Button(new Rectangle(0, 0, 960, 960), () -> gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU));
+        super("/assets/textures/menu/won_menu.png", gamePanel);
+        addButton(new Button(new Rectangle(0, 0, 1000, 1000), () -> gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU));
     }
 
     @Override

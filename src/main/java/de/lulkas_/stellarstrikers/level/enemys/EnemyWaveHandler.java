@@ -1,7 +1,6 @@
 package de.lulkas_.stellarstrikers.level.enemys;
 
 import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.level.WaveSpawnHandler;
 import de.lulkas_.stellarstrikers.level.player.Player;
 import de.lulkas_.stellarstrikers.menu.display.TemporaryIntDisplay;
 

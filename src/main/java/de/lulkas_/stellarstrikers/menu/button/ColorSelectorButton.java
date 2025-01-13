@@ -1,49 +1,42 @@
 package de.lulkas_.stellarstrikers.menu.button;
 
+import de.lulkas_.stellarstrikers.util.CoordConversion;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class ColorSelectorButton implements Clickable {
-    private final Rectangle originalClickingArea;
+    private final Rectangle gameClickingArea;
+    private Rectangle screenClickingArea;
     private Color color;
     private final Runnable onCLick;
-    private int xShifted;
-    private float yScale;
 
-    public ColorSelectorButton(Rectangle originalClickingArea, Color startColor, Runnable onCLick) {
-        this.originalClickingArea = originalClickingArea;
+    public ColorSelectorButton(Rectangle gameClickingArea, Color startColor, Runnable onCLick) {
+        this.gameClickingArea = gameClickingArea;
         this.color = startColor;
         this.onCLick = onCLick;
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override
     public Rectangle getClickingArea() {
-        Rectangle toReturn = new Rectangle(originalClickingArea);
-        toReturn.setBounds(((int) (xShifted + originalClickingArea.x * yScale)), ((int) (originalClickingArea.y * yScale)), ((int) (originalClickingArea.width * yScale)), ((int) (originalClickingArea.height * yScale)));
-        return toReturn;
+        return screenClickingArea;
     }
 
     @Override
     public Runnable getWhenCLicked() {
         return () -> {
-            color = JColorChooser.showDialog(null, "Choose a color", color);
+            Color selected = JColorChooser.showDialog(null, "Choose a color", color);
+            if(selected != null) {
+                color = selected;
+            }
             onCLick.run();
         };
     }
 
     @Override
-    public void setXShifted(int value) {
-        xShifted = value;
-    }
-
-    @Override
-    public void setYScale(float value) {
-        yScale = value;
-    }
-
-    @Override
     public void tick() {
-
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override

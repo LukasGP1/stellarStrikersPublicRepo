@@ -19,6 +19,6 @@ public class GameTimer {
     }
 
     public float getAccurateSeconds() {
-        return ((float) ticks) / 2000;
+        return ((float) ticks) / 200;
     }
 }

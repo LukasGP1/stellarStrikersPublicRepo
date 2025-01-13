@@ -1,23 +1,23 @@
 package de.lulkas_.stellarstrikers.menu.button;
 
+import de.lulkas_.stellarstrikers.util.CoordConversion;
+
 import java.awt.*;
 
 public class Button implements Clickable {
-    private final Rectangle originalClickingArea;
+    private final Rectangle gameClickingArea;
+    private Rectangle screenClickingArea;
     private final Runnable whenClicked;
-    private int xShifted;
-    private float yScale;
 
-    public Button(Rectangle originalClickingArea, Runnable whenClicked) {
-        this.originalClickingArea = originalClickingArea;
+    public Button(Rectangle gameClickingArea, Runnable whenClicked) {
+        this.gameClickingArea = gameClickingArea;
         this.whenClicked = whenClicked;
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override
     public Rectangle getClickingArea() {
-        Rectangle toReturn = new Rectangle(originalClickingArea);
-        toReturn.setBounds(((int) (xShifted + originalClickingArea.x * yScale)), ((int) (originalClickingArea.y * yScale)), ((int) (originalClickingArea.width * yScale)), ((int) (originalClickingArea.height * yScale)));
-        return toReturn;
+        return screenClickingArea;
     }
 
     @Override
@@ -26,18 +26,8 @@ public class Button implements Clickable {
     }
 
     @Override
-    public void setXShifted(int value) {
-        xShifted = value;
-    }
-
-    @Override
-    public void setYScale(float value) {
-        yScale = value;
-    }
-
-    @Override
     public void tick() {
-
+        screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
     @Override

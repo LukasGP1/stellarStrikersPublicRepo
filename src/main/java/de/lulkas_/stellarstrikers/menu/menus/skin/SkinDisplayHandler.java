@@ -10,6 +10,6 @@ public class SkinDisplayHandler extends DisplayHandler {
 
     public SkinDisplayHandler(SkinDisplay skinDisplay) {
         this.skinDisplay = skinDisplay;
-        addDisplay(new TemporaryIntDisplay("You need to be Level ", 100, 80, 48, Color.RED, " to use this", () -> skinDisplay.displayed));
+        addDisplay(new TemporaryIntDisplay("You need to be Level ", 300, 80, 48, Color.RED, " to use this", () -> skinDisplay.displayed, 2, 450, 50));
     }
 }

@@ -7,8 +7,8 @@ public class TemporaryIntDisplay extends IntDisplay {
     private int ticks;
     public boolean visible = false;
 
-    public TemporaryIntDisplay(String name1, int x, int y, int size, Color color, String name2, Supplier<Integer> toDraw) {
-        super(name1, x, y, size, color, name2, toDraw);
+    public TemporaryIntDisplay(String name1, int x, int y, int size, Color color, String name2, Supplier<Integer> toDraw, int numerals, int gameWidth, int gameHeight) {
+        super(name1, x, y, size, color, name2, toDraw, numerals, gameWidth, gameHeight);
     }
 
     public void appear(int ticks) {

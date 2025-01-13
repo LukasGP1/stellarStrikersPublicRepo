@@ -1,6 +1,7 @@
 package de.lulkas_.stellarstrikers.level;
 
 import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.util.CoordConversion;
 import de.lulkas_.stellarstrikers.level.enemys.Boss;
 import de.lulkas_.stellarstrikers.level.enemys.Enemy;
 
@@ -9,33 +10,35 @@ import java.util.List;
 
 public abstract class Entity {
     public Rectangle hitbox;
-    protected final int width;
-    protected final int height;
-    protected float x;
-    protected float y;
+    protected final int gameWidth;
+    protected final int gameHeight;
+    protected float gameX;
+    protected float gameY;
+    protected float[] screenCoords;
+    protected float[] screenSize;
     public int health;
     public boolean dead = false;
     public final int maxHealth;
     protected final GamePanel gamePanel;
     private List<Entity> collideWith;
 
-    public Entity(int width, int height, float startX, float startY, int health, GamePanel gamePanel) {
-        this.x = startX;
-        this.y = startY;
-        this.width = width;
-        this.height = height;
+    public Entity(int gameWidth, int gameHeight, float startX, float startY, int health, GamePanel gamePanel) {
+        this.gameX = startX;
+        this.gameY = startY;
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
         this.gamePanel = gamePanel;
-        this.hitbox = new Rectangle((int) x, (int) y, this.width, this.height);
+        this.hitbox = new Rectangle((int) gameX, (int) gameY, this.gameWidth, this.gameHeight);
         this.health = health;
         this.maxHealth = health;
     }
 
-    public void setY(float y) {
-        this.y = y;
+    public void setGameY(float gameY) {
+        this.gameY = gameY;
     }
 
-    public void setX(float x) {
-        this.x = x;
+    public void setGameX(float gameX) {
+        this.gameX = gameX;
     }
 
     protected void tick() {
@@ -66,19 +69,33 @@ public abstract class Entity {
         }
     }
 
+    public Graphics draw(Graphics g) {
+        screenCoords = CoordConversion.gameToScreen(new Float[]{this.gameX, this.gameY});
+        screenSize = CoordConversion.gameToScreen(new Float[]{Float.valueOf(this.gameWidth), Float.valueOf(this.gameHeight)});
+        return g;
+    }
+
     public abstract List<Entity> getCollideWith();
 
     public abstract void collideWith(Entity entity);
 
     protected void updateHitbox() {
-        this.hitbox = new Rectangle((int) x, (int) y, this.width, this.height);
+        this.hitbox = new Rectangle((int) gameX, (int) gameY, this.gameWidth, this.gameHeight);
     }
 
-    public float getX() {
-        return x;
+    public float getGameX() {
+        return gameX;
     }
 
-    public float getY() {
-        return y;
+    public float getGameY() {
+        return gameY;
+    }
+
+    public int getGameHeight() {
+        return gameHeight;
+    }
+
+    public int getGameWidth() {
+        return gameWidth;
     }
 }

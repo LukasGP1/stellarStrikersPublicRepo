@@ -1,52 +1,48 @@
 package de.lulkas_.stellarstrikers.menu.display;
 
-import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.Main;
+import de.lulkas_.stellarstrikers.util.CoordConversion;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Display {
     private final Color color;
-    protected final int size;
-    protected int x, y;
+    protected final int fontSize;
+    protected int gameX, gameY;
+    protected int screenX, screenY;
+    protected int gameWidth, gameHeight;
+    protected int screenWidth, screenHeight;
     protected String text;
-    private int xShifted;
-    private float yScale;
 
-    public Display(Color color, int size, int x, int y, String text) {
+    public Display(Color color, int fontSize, int gameX, int gameY, String text, int gameWidth, int gameHeight) {
         this.color = color;
-        this.size = size;
-        this.x = x;
-        this.y = y;
+        this.fontSize = fontSize;
+        this.gameX = gameX;
+        this.gameY = gameY;
         this.text = text;
-    }
-
-    public void setxShifted(int xShifted) {
-        this.xShifted = xShifted;
-    }
-
-    public void setyScale(float yScale) {
-        this.yScale = yScale;
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
     }
 
     public Graphics draw(Graphics g) {
-        if(Main.game.window.gamePanel.gameState == GamePanel.GameState.PLAYING) {
-            g.drawImage(getTextAsImage(text), x, y, null);
-        } else {
-            g.drawImage(getTextAsImage(text), x + xShifted, ((int) (y * yScale)), null);
-        }
+        g.drawImage(getTextAsImage(text).getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX, screenY, null);
         return g;
     }
 
     public void tick() {
+        float[] screenCoords = CoordConversion.gameToScreen(new Float[]{((float) gameX), ((float) gameY)});
+        screenX = ((int) screenCoords[0]);
+        screenY = ((int) screenCoords[1]);
 
+        float[] screenSize = CoordConversion.gameToScreen(new Float[]{((float) gameWidth), ((float) gameHeight)});
+        screenWidth = ((int) screenSize[0]);
+        screenHeight = ((int) screenSize[1]);
     }
 
     protected Image getTextAsImage(String text) {
         BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = img.createGraphics();
-        Font font = new Font("Arial", Font.PLAIN, ((int) (this.size * yScale)));
+        Font font = new Font("Arial", Font.PLAIN, ((int) (this.fontSize)));
         g2d.setFont(font);
         FontMetrics fm = g2d.getFontMetrics();
         int width = fm.stringWidth(text) + 100;

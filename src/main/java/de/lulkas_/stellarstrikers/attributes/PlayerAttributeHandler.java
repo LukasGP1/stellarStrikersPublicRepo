@@ -43,7 +43,7 @@ public class PlayerAttributeHandler {
         levelingCost += 5;
         level++;
         levelPoints++;
-        SoundHandler.playSound("/sounds/menu/level_up.wav", -20f, gamePanel);
+        SoundHandler.playSound("/assets/sounds/menu/level_up.wav", -20f, gamePanel);
         ((TemporaryIntDisplay) gamePanel.mainMenu.displayHandler.displays.get(2)).appear(1000);
         apiThread2 = new Thread(this::levelUpApi);
         apiThread2.start();

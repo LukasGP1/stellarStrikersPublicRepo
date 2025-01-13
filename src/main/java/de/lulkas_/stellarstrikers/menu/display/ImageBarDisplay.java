@@ -10,8 +10,8 @@ public class ImageBarDisplay extends Display {
     private final Supplier<Integer> getCount;
     private final Image image;
 
-    public ImageBarDisplay(int size, int x, int y, String path, Supplier<Integer> getCount) {
-        super(new Color(0, 0, 0), size, x, y, "");
+    public ImageBarDisplay(int size, int x, int y, String path, Supplier<Integer> getCount, int gameWidth, int gameHeight) {
+        super(new Color(0, 0, 0), size, x, y, "", gameWidth, gameHeight);
         this.getCount = getCount;
         this.image = importImage(path);
     }
@@ -19,7 +19,7 @@ public class ImageBarDisplay extends Display {
     @Override
     public Graphics draw(Graphics g) {
         for(int i = 0; i < getCount.get(); i++) {
-            g.drawImage(image, x + size * i, y, null);
+            g.drawImage(image.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX + screenWidth * i, screenY, null);
         }
 
         return g;
@@ -28,7 +28,7 @@ public class ImageBarDisplay extends Display {
     private Image importImage(String path) {
         InputStream is = getClass().getResourceAsStream(path);
         try {
-            return ImageIO.read(is).getScaledInstance(this.size, this.size, Image.SCALE_DEFAULT);
+            return ImageIO.read(is).getScaledInstance(this.fontSize, this.fontSize, Image.SCALE_DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

@@ -12,38 +12,38 @@ import java.awt.*;
 
 public class OptionsMenu extends Menu {
     public OptionsMenu(GamePanel gamePanel) {
-        super("/textures/menu/options_menu.png", gamePanel);
+        super("/assets/textures/menu/options_menu.png", gamePanel);
 
-        addButton(new Button(new Rectangle(130, 750, 700, 100), () -> {
+        addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new SwitchButton(new Rectangle(650, 200, 150, 50), () -> {
+        addButton(new SwitchButton(new Rectangle(606, 188, 94, 57), () -> {
             ((SwitchButton) this.clickables.get(1)).changeState();
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             gamePanel.playerOptionsHandler.changePlayingSound();
-        }, "/textures/menu/icon/on.png", "/textures/menu/icon/off.png", gamePanel.playerOptionsHandler.isPlayingSound()));
+        }, "/assets/textures/menu/icon/on.png", "/assets/textures/menu/icon/off.png", gamePanel.playerOptionsHandler.isPlayingSound()));
 
-        addButton(new SwitchButton(new Rectangle(650, 275, 150, 50), () -> {
+        addButton(new SwitchButton(new Rectangle(606, 272, 94, 57), () -> {
             ((SwitchButton) this.clickables.get(2)).changeState();
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
             gamePanel.playerOptionsHandler.changePlayingMusic();
-        }, "/textures/menu/icon/on.png", "/textures/menu/icon/off.png", gamePanel.playerOptionsHandler.isPlayingMusic()));
+        }, "/assets/textures/menu/icon/on.png", "/assets/textures/menu/icon/off.png", gamePanel.playerOptionsHandler.isPlayingMusic()));
 
-        addButton(new ColorSelectorButton(new Rectangle(650, 350, 150, 50), gamePanel.playerOptionsHandler.getPlayerBulletColor(), () -> {
+        addButton(new ColorSelectorButton(new Rectangle(606, 356, 94, 57), gamePanel.playerOptionsHandler.getPlayerBulletColor(), () -> {
             gamePanel.playerOptionsHandler.setPlayerBulletColor(((ColorSelectorButton) this.clickables.get(3)).getColor());
         }));
 
-        addButton(new ColorSelectorButton(new Rectangle(650, 425, 150, 50), gamePanel.playerOptionsHandler.getEnemyBulletColor(), () -> {
+        addButton(new ColorSelectorButton(new Rectangle(605, 438, 94, 57), gamePanel.playerOptionsHandler.getEnemyBulletColor(), () -> {
             gamePanel.playerOptionsHandler.setEnemyBulletColor(((ColorSelectorButton) this.clickables.get(4)).getColor());
         }));
 
-        addButton(new ColorSelectorButton(new Rectangle(650, 500, 150, 50), gamePanel.playerOptionsHandler.getBombColor(), () -> {
+        addButton(new ColorSelectorButton(new Rectangle(606, 522, 94, 57), gamePanel.playerOptionsHandler.getBombColor(), () -> {
             gamePanel.playerOptionsHandler.setBombColor(((ColorSelectorButton) this.clickables.get(5)).getColor());
         }));
 
-        addButton(new ColorSelectorButton(new Rectangle(650, 575, 150, 50), gamePanel.playerOptionsHandler.getDetonatedBombColor(), () -> {
+        addButton(new ColorSelectorButton(new Rectangle(606, 606, 94, 57), gamePanel.playerOptionsHandler.getDetonatedBombColor(), () -> {
             gamePanel.playerOptionsHandler.setDetonatedBombColor(((ColorSelectorButton) this.clickables.get(6)).getColor());
         }));
     }

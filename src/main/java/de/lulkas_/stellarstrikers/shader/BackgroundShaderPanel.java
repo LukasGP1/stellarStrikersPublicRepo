@@ -64,26 +64,20 @@ public class BackgroundShaderPanel implements GLEventListener {
             if(((int) (gamePanel.enemyWaveHandler.wave / 5)) * 5 == gamePanel.enemyWaveHandler.wave) {
                 if(gamePanel.enemyWaveHandler.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
                     gl.glUniform1i(spawnTicksLocation, gamePanel.enemyWaveHandler.spawningTicks);
-                    System.out.println(gamePanel.enemyWaveHandler.spawningTicks);
                 } else {
                     gl.glUniform1i(spawnTicksLocation, 0);
-                    System.out.println(0);
                 }
             } else if (((int) ((gamePanel.enemyWaveHandler.wave - 1) / 5)) * 5 == gamePanel.enemyWaveHandler.wave - 1 && gamePanel.enemyWaveHandler.wave != 1) {
                 if(gamePanel.enemyWaveHandler.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
                     gl.glUniform1i(spawnTicksLocation, 120 - gamePanel.enemyWaveHandler.spawningTicks);
-                    System.out.println(gamePanel.enemyWaveHandler.spawningTicks);
                 } else {
                     gl.glUniform1i(spawnTicksLocation, 120);
-                    System.out.println(120);
                 }
             } else  {
                 gl.glUniform1i(spawnTicksLocation, 120);
-                System.out.println(120);
             }
         } else {
             gl.glUniform1i(spawnTicksLocation, 120);
-            System.out.println(120);
         }
 
         int resolutionLocation = gl.glGetUniformLocation(shaderProgram, "resolution");
@@ -109,7 +103,7 @@ public class BackgroundShaderPanel implements GLEventListener {
 
     public BackgroundShaderPanel(String fragmentShaderName, String vertexShaderName, GamePanel gamePanel) {
         this.gamePanel = gamePanel;
-        InputStream inputStream = getClass().getResourceAsStream("/shader/" + fragmentShaderName);
+        InputStream inputStream = getClass().getResourceAsStream("/assets/shader/" + fragmentShaderName);
         assert inputStream != null;
         Scanner scanner = new Scanner(inputStream);
         StringBuilder code = new StringBuilder();
@@ -119,7 +113,7 @@ public class BackgroundShaderPanel implements GLEventListener {
         }
         this.fragmentCode = code.toString();
 
-        inputStream = getClass().getResourceAsStream("/shader/" + vertexShaderName);
+        inputStream = getClass().getResourceAsStream("/assets/shader/" + vertexShaderName);
         assert inputStream != null;
         scanner = new Scanner(inputStream);
         code = new StringBuilder();

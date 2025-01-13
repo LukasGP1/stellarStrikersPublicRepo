@@ -1,6 +1,5 @@
 package de.lulkas_.stellarstrikers.menu.menus.game;
 
-import de.lulkas_.stellarstrikers.Main;
 import de.lulkas_.stellarstrikers.level.enemys.EnemyWaveHandler;
 import de.lulkas_.stellarstrikers.level.player.Player;
 import de.lulkas_.stellarstrikers.menu.display.DisplayHandler;
@@ -17,8 +16,8 @@ public class GameDisplayHandler extends DisplayHandler {
     public GameDisplayHandler(Player player, EnemyWaveHandler enemyWaveHandler) {
         this.player = player;
         this.enemyWaveHandler = enemyWaveHandler;
-        addDisplay(new IntDisplay("Score: ", Main.game.window.getWidth() - 260, 5, 48, Color.WHITE, "", enemyWaveHandler::getSingleGameScore));
-        addDisplay(new ImageBarDisplay(50, 5, 5, "/textures/menu/icon/heart.png", () -> player.health));
-        addDisplay(new TemporaryIntDisplay("Wave ", Main.game.window.getWidth() / 2 - 80, Main.game.window.getHeight() / 2 - 80, 80, Color.WHITE, "", () -> (this.enemyWaveHandler.wave)));
+        addDisplay(new IntDisplay("Score: ", 870, 5, 48, Color.WHITE, "", enemyWaveHandler::getSingleGameScore, 4, 150, 50));
+        addDisplay(new ImageBarDisplay(50, 5, 5, "/assets/textures/menu/icon/heart.png", () -> player.health, 30, 50));
+        addDisplay(new TemporaryIntDisplay("Wave ", 400, 400, 80, Color.WHITE, "", () -> (this.enemyWaveHandler.wave), 3, 300, 100));
     }
 }

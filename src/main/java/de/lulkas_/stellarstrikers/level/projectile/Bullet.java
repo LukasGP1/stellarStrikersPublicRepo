@@ -16,7 +16,7 @@ public class Bullet extends Entity {
     private final Color color;
 
     public Bullet(float startX, float startY, float travelDirectionY, float travelDirectionX, Textured firedBy, GamePanel gamePanel, Color color) {
-        super(3, 15, startX, startY, 1, gamePanel);
+        super(3, 26, startX, startY, 1, gamePanel);
         this.travelDirectionY = travelDirectionY;
         this.travelDirectionX = travelDirectionX;
         this.firedBy = firedBy;
@@ -27,16 +27,18 @@ public class Bullet extends Entity {
     public static final int UP = -1;
     public static final int DOWN = 1;
 
+    @Override
     public Graphics draw(Graphics g) {
+        g = super.draw(g);
         g.setColor(color);
-        g.fillRect((int) x, (int) y, this.width, this.height);
+        g.fillRect((int) screenCoords[0], (int) screenCoords[1], ((int) screenSize[0]), ((int) screenSize[1]));
         return g;
     }
 
     public void tick() {
-        this.y += this.travelDirectionY;
-        this.x += this.travelDirectionX;
-        if(this.y < 0 || this.y > 960) {
+        this.gameY += this.travelDirectionY;
+        this.gameX += this.travelDirectionX;
+        if(this.gameY + travelDirectionY < 0 || this.gameY + travelDirectionY + 5 > 1000) {
             this.dead = true;
         }
         super.tick();

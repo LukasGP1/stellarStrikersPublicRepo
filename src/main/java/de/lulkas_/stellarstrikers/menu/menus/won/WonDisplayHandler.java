@@ -12,8 +12,8 @@ public class WonDisplayHandler extends DisplayHandler {
     private GameTimer gameTimer;
 
     public WonDisplayHandler(GameTimer gameTimer, EnemyWaveHandler enemyWaveHandler) {
-        addDisplay(new IntDisplay("Score: ", 384, 150, 48, Color.WHITE, "", () -> ( enemyWaveHandler.getSingleGameScore())));
-        addDisplay(new IntDisplay("Took ", 240, 300, 48, Color.WHITE, " Seconds to beat", () -> ((int) gameTimer.getAccurateSeconds())));
+        addDisplay(new IntDisplay("Score: ", 384, 150, 48, Color.WHITE, "", () -> ( enemyWaveHandler.getSingleGameScore()), 4, 200, 50));
+        addDisplay(new IntDisplay("Took ", 340, 300, 48, Color.WHITE, " Seconds to beat", () -> ((int) gameTimer.getAccurateSeconds()), 3, 400, 50));
         this.enemyWaveHandler = enemyWaveHandler;
         this.gameTimer = gameTimer;
     }

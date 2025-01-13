@@ -14,40 +14,40 @@ import java.net.URISyntaxException;
 public class MainMenu extends Menu {
 
     public MainMenu(GamePanel gamePanel) {
-        super("/textures/menu/main_menu.png", gamePanel);
+        super("/assets/textures/menu/main_menu.png", gamePanel);
 
-        addButton(new Button(new Rectangle(300, 300, 400, 200), () -> {
+        addButton(new Button(new Rectangle(387, 300, 250, 221), () -> {
             this.gamePanel.gameState = GamePanel.GameState.STARTING_GAME;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(300, 550, 400, 150), () -> {
+        addButton(new Button(new Rectangle(387, 578, 250, 166), () -> {
             this.gamePanel.gameState = GamePanel.GameState.ENTER_SKILL_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(300, 750, 400, 100), gamePanel.saveWiper::wipe));
+        addButton(new Button(new Rectangle(387, 800, 251, 111), gamePanel.saveWiper::wipe));
 
-        addButton(new Button(new Rectangle(40, 324, 220, 151),() -> {
+        addButton(new Button(new Rectangle(224, 328, 138, 167),() -> {
             this.gamePanel.gameState = GamePanel.GameState.ENTER_CREDITS_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(720, 325, 200, 155), () -> {
+        addButton(new Button(new Rectangle(649, 328, 126, 172), () -> {
             gamePanel.api.sessionClose();
             System.exit(0);
         }));
 
-        addButton(new Button(new Rectangle(40, 550, 220, 150), () -> {
+        addButton(new Button(new Rectangle(224, 578, 139, 167), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_SKIN_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
 
-        addButton(new Button(new Rectangle(730, 550, 200, 150), this::joinDiscord));
+        addButton(new Button(new Rectangle(656, 578, 126, 168), this::joinDiscord));
 
-        addButton(new Button(new Rectangle(40, 750, 210, 100), () -> {
+        addButton(new Button(new Rectangle(224, 800, 133, 111), () -> {
             gamePanel.gameState = GamePanel.GameState.ENTER_OPTIONS_MENU;
-            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gamePanel);
+            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
         }));
     }
 

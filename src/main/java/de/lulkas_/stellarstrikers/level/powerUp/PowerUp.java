@@ -13,7 +13,7 @@ public class PowerUp extends Textured {
     private final PowerUpType type;
 
     public PowerUp(float startX, float startY, GamePanel gamePanel, int amount, PowerUpType type, int ticks) {
-        super(startX, startY, type.texture, 50, 50, 1, gamePanel);
+        super(startX, startY, type.texture, 45, 80, 1, gamePanel);
         this.amount = amount;
         this.ticks = ticks;
         this.type = type;
@@ -22,7 +22,7 @@ public class PowerUp extends Textured {
     @Override
     public void tick() {
         super.tick();
-        this.y += 0.02f * gamePanel.gameMenu.yScale;
+        this.gameY += 0.02f;
     }
 
     @Override
@@ -46,14 +46,14 @@ public class PowerUp extends Textured {
             gamePanel.playerPowerUpHandler.getMaxBulletCooldownPowerUp(amount, ticks);
         }
 
-        SoundHandler.playSound("/sounds/level/power_up/collect.wav", -2f, gamePanel);
+        SoundHandler.playSound("/assets/sounds/level/power_up/collect.wav", -2f, gamePanel);
         this.dead = true;
     }
 
     public enum PowerUpType {
-        DAMAGE("/textures/power_up/damage.png"),
-        SHOOTING_SPEED("/textures/power_up/shooting_speed.png"),
-        INCOME("/textures/power_up/income.png");
+        DAMAGE("/assets/textures/power_up/damage.png"),
+        SHOOTING_SPEED("/assets/textures/power_up/shooting_speed.png"),
+        INCOME("/assets/textures/power_up/income.png");
 
         public final String texture;
 

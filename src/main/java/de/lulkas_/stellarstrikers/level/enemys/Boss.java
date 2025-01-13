@@ -25,16 +25,16 @@ public class Boss extends Textured {
     private final BossType type;
 
     public Boss(float startX, float startY, int health, float speed, GamePanel gamePanel, BossType type) {
-        super(startX, startY, type.texture, 200, 200, health, gamePanel);
+        super(startX, startY, type.texture, 159, 234, health, gamePanel);
         this.startX = startX;
         this.startY = startY;
         this.gamePanel = gamePanel;
         this.speed = speed;
         this.type = type;
         this.bombCooldown = type.bombCooldown;
-        damage1 = importImage("/textures/enemy/damage_overlay_1.png");
-        damage2 = importImage("/textures/enemy/damage_overlay_2.png");
-        empty = importImage("/textures/enemy/empty.png");
+        damage1 = importImage("/assets/textures/enemy/damage_overlay_1.png");
+        damage2 = importImage("/assets/textures/enemy/damage_overlay_2.png");
+        empty = importImage("/assets/textures/enemy/empty.png");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Boss extends Textured {
 
         if(this.bombCooldown <= 0) {
             shoot();
-            this.bombCooldown = Random.randomInt(type.bombCooldown + 200, type.bombCooldown - 200);
+            this.bombCooldown = Random.randomInt(type.bombCooldown + 100, type.bombCooldown - 100);
         } else {
             bombCooldown--;
         }
@@ -54,18 +54,18 @@ public class Boss extends Textured {
     }
 
     private void shoot() {
-        this.bombs.add(new Bomb(x + 100, y + 100, gamePanel, type.bulletSpeed * gamePanel.gameMenu.yScale, getBulletTravelDirectionX(), this, ((int) getBulletTicks()), gamePanel, gamePanel.playerOptionsHandler.getBombColor(), gamePanel.playerOptionsHandler.getDetonatedBombColor()));
-        SoundHandler.playSound("/sounds/level/shoot_enemy.wav", -10f, gamePanel);
+        this.bombs.add(new Bomb(gameX + gameWidth / 2f, gameY + gameHeight, gamePanel, type.bulletSpeed, getBulletTravelDirectionX(), this, ((int) getBulletTicks()), gamePanel, gamePanel.playerOptionsHandler.getBombColor(), gamePanel.playerOptionsHandler.getDetonatedBombColor()));
+        SoundHandler.playSound("/assets/sounds/level/shoot_enemy.wav", -10f, gamePanel);
     }
 
     public float getBulletTicks() {
-        float bulletYDistance = gamePanel.player.getY() - this.y - 64;
-        return bulletYDistance / type.bulletSpeed;
+        float bombYDistance = gamePanel.player.getGameY() - this.gameY - this.gameHeight + gamePanel.player.getGameHeight();
+        return bombYDistance / type.bulletSpeed;
     }
 
     public float getBulletTravelDirectionX() {
         if(type.aims) {
-            float bulletXDistance = gamePanel.player.getX() - this.x - 32;
+            float bulletXDistance = gamePanel.player.getGameX() - this.gameX - 32;
             return bulletXDistance / getBulletTicks();
         } else {
             return 0;
@@ -83,23 +83,23 @@ public class Boss extends Textured {
     public void collideWith(Entity entity) {
         this.health -= gamePanel.playerSkillHandler.getDamage();
         entity.dead = true;
-        SoundHandler.playSound("/sounds/level/ding_break.wav", -2f, gamePanel);
+        SoundHandler.playSound("/assets/sounds/level/ding_break.wav", -2f, gamePanel);
     }
 
     private void updateMovement() {
         if(this.movementState == Enemy.MovementState.LEFT) {
-            if(Math.abs(this.x - this.startX) < (float) (0.42 * Main.game.window.getWidth())) {
-                this.x -= this.speed;
+            if(Math.abs(this.gameX - this.startX) < 300) {
+                this.gameX -= this.speed;
             } else {
                 this.movementState = Enemy.MovementState.RIGHT;
-                this.x += this.speed;
+                this.gameX += this.speed;
             }
         } else {
-            if(Math.abs(this.x - this.startX) < (float) (0.42 * Main.game.window.getWidth())) {
-                this.x += this.speed;
+            if(Math.abs(this.gameX - this.startX) < 300) {
+                this.gameX += this.speed;
             } else {
                 this.movementState = Enemy.MovementState.LEFT;
-                this.x -= this.speed;
+                this.gameX -= this.speed;
             }
         }
     }
@@ -107,7 +107,7 @@ public class Boss extends Textured {
     @Override
     public Graphics draw(Graphics g) {
         g = super.draw(g);
-        g.drawImage(getDamageOverlay(), ((int) x), ((int) y), null);
+        g.drawImage(getDamageOverlay().getScaledInstance(((int) screenSize[0]), ((int) screenSize[1]), Image.SCALE_DEFAULT), ((int) screenCoords[0]), ((int) screenCoords[1]), null);
         g = drawBombs(g);
         return g;
     }
@@ -145,9 +145,9 @@ public class Boss extends Textured {
     }
 
     public enum BossType {
-        NORMAL("/textures/enemy/enemy.png", false, 1.0f, 150),
-        SNIPER("/textures/enemy/sniper.png", true, 1.0f, 250),
-        GUNNER("/textures/enemy/gunner.png", false, 1.0f, 100);
+        NORMAL("/assets/textures/enemy/enemy.png", false, 1.0f, 150),
+        SNIPER("/assets/textures/enemy/sniper.png", true, 1.0f, 250),
+        GUNNER("/assets/textures/enemy/gunner.png", false, 1.0f, 100);
 
         public final String texture;
         public final boolean aims;

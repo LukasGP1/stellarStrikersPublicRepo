@@ -28,6 +28,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+
 public class GamePanel extends JPanel {
     public MouseEvent lastClick = null;
     private final MouseInputs mouseInputs;
@@ -75,7 +76,7 @@ public class GamePanel extends JPanel {
         this.playerSkillHandler = saveReader.getPlayerSkillHandler(this);
         this.playerOptionsHandler = saveReader.getPLayerOptionsHandler();
         this.playerStatisticsHandler = new PlayerStatisticsHandler(api);
-        this.musicHandler = new MusicHandler("/sounds/music.wav", 3000, -10f, this);
+        this.musicHandler = new MusicHandler("/assets/sounds/music.wav", 3000, -10f, this);
         musicHandler.start();
     }
 
@@ -88,7 +89,7 @@ public class GamePanel extends JPanel {
         this.wonMenu = new WonMenu(this);
         this.playerAttributeHandler.score += enemyWaveHandler.getSingleGameScore();
         this.playerStatisticsHandler.winGame();
-        SoundHandler.playSound("/sounds/menu/win.wav", -5f, this);
+        SoundHandler.playSound("/assets/sounds/menu/win.wav", -5f, this);
     }
 
     private void createSkillMenuObjects() {
@@ -97,7 +98,7 @@ public class GamePanel extends JPanel {
 
     private void createLostMenuObjects() {
         this.lostMenu = new LostMenu(this);
-        SoundHandler.playSound("/sounds/menu/lose.wav", -5f, this);
+        SoundHandler.playSound("/assets/sounds/menu/lose.wav", -5f, this);
     }
 
     private void createCreditsMenuObjects() {
@@ -109,16 +110,15 @@ public class GamePanel extends JPanel {
     }
 
     private void createSkinMenuObjects() {
-        skinDisplay = new SkinDisplay(448, 220, List.of("/textures/player/1.png", "/textures/player/2.png", "/textures/player/3.png", "/textures/player/4.png", "/textures/player/5.png", "/textures/player/6.png", "/textures/player/7.png", "/textures/player/8.png", "/textures/player/9.png", "/textures/player/10.png", "/textures/player/11.png", "/textures/player/12.png", "/textures/player/13.png", "/textures/player/14.png", "/textures/player/15.png", "/textures/player/16.png", "/textures/player/17.png", "/textures/player/18.png", "/textures/player/19.png"), playerAttributeHandler.getSkinDisplayed(), "/textures/menu/icon/lock.png", this);
+        skinDisplay = new SkinDisplay(500, 220, List.of("/assets/textures/player/1.png", "/assets/textures/player/2.png", "/assets/textures/player/3.png", "/assets/textures/player/4.png", "/assets/textures/player/5.png", "/assets/textures/player/6.png", "/assets/textures/player/7.png", "/assets/textures/player/8.png", "/assets/textures/player/9.png", "/assets/textures/player/10.png", "/assets/textures/player/11.png", "/assets/textures/player/12.png", "/assets/textures/player/13.png", "/assets/textures/player/14.png", "/assets/textures/player/15.png", "/assets/textures/player/16.png", "/assets/textures/player/17.png", "/assets/textures/player/18.png", "/assets/textures/player/19.png"), playerAttributeHandler.getSkinDisplayed(), "/assets/textures/menu/icon/lock.png", this);
         skinMenu = new SkinMenu(this);
     }
 
     private void createGameObjects() {
-        this.player = new Player(3.0f * (Main.game.window.getWidth() / 960), this, Main.game.window.getWidth() / 2, 750, false, playerSkillHandler, playerAttributeHandler.getSkinDisplayed());
+        this.player = new Player(3.0f, this, 468, 750, false, playerSkillHandler, playerAttributeHandler.getSkinDisplayed());
         this.enemyWaveHandler = new EnemyWaveHandler(0, this, player, playerAttributeHandler.getLevel() + 2);
         this.gameMenu = new GameMenu(this);
         this.gameMenu.tick();
-        this.player.setY(750 * this.gameMenu.yScale);
         this.powerUpHandler = new PowerUpHandler(this);
         this.gameTimer.reset();
     }

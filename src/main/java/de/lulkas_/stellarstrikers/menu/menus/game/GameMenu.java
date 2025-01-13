@@ -6,7 +6,7 @@ import de.lulkas_.stellarstrikers.menu.display.DisplayHandler;
 
 public class GameMenu extends Menu {
     public GameMenu(GamePanel gamePanel) {
-        super("/textures/menu/game_menu.png", gamePanel);
+        super("/assets/textures/menu/game_menu.png", gamePanel);
     }
 
     @Override
