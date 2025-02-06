@@ -1,8 +1,7 @@
 package de.lulkas_.stellarstrikers.level.projectile;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.Entity;
-import de.lulkas_.stellarstrikers.level.Textured;
 import de.lulkas_.stellarstrikers.level.enemys.Enemy;
 
 import java.awt.*;
@@ -11,29 +10,23 @@ import java.util.List;
 public class Bullet extends Entity {
     private final float travelDirectionY;
     private final float travelDirectionX;
-    public final Textured firedBy;
-    private final GamePanel gamePanel;
-    private final Color color;
+    public final Entity firedBy;
+    private final GameObjectHandler gameObjectHandler;
 
-    public Bullet(float startX, float startY, float travelDirectionY, float travelDirectionX, Textured firedBy, GamePanel gamePanel, Color color) {
-        super(3, 26, startX, startY, 1, gamePanel);
+    public Bullet(float startX, float startY, float travelDirectionY, float travelDirectionX, Entity firedBy, GameObjectHandler gameObjectHandler, Color color) {
+        super(3, 26, startX, startY, 1, gameObjectHandler);
         this.travelDirectionY = travelDirectionY;
         this.travelDirectionX = travelDirectionX;
         this.firedBy = firedBy;
-        this.gamePanel = gamePanel;
-        this.color = color;
+        this.gameObjectHandler = gameObjectHandler;
+    }
+
+    public List<Float> getData() {
+        return List.of(0f, gameX / 1000f, gameY / 1000f, gameWidth / 1000f, gameHeight / 1000f);
     }
 
     public static final int UP = -1;
     public static final int DOWN = 1;
-
-    @Override
-    public Graphics draw(Graphics g) {
-        g = super.draw(g);
-        g.setColor(color);
-        g.fillRect((int) screenCoords[0], (int) screenCoords[1], ((int) screenSize[0]), ((int) screenSize[1]));
-        return g;
-    }
 
     public void tick() {
         this.gameY += this.travelDirectionY;
@@ -48,9 +41,9 @@ public class Bullet extends Entity {
     public List<Entity> getCollideWith() {
         List<Entity> toReturn = new java.util.ArrayList<>(List.of());
         if(firedBy instanceof Enemy) {
-            toReturn.add(gamePanel.player);
+            toReturn.add(gameObjectHandler.player);
         } else {
-            toReturn.addAll(gamePanel.enemyWaveHandler.enemies);
+            toReturn.addAll(gameObjectHandler.enemyWaveHandler.enemies);
         }
         return toReturn;
     }

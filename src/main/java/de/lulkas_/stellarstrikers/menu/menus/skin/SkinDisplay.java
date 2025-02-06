@@ -1,77 +1,58 @@
 package de.lulkas_.stellarstrikers.menu.menus.skin;
 
-import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.util.CoordConversion;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
+import de.lulkas_.stellarstrikers.menu.ExclamationMark;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 public class SkinDisplay {
     private final int gameX, gameY;
-    private int screenX, screenY;
     private final int gameWidth, gameHeight;
-    private int screenWidth, screenHeight;
-    private final List<Image> images = new ArrayList<>();
-    private final Image lock;
     public int displayed;
-    private final GamePanel gamePanel;
+    private final GameObjectHandler gameObjectHandler;
+    public final ExclamationMark exclamationMark;
 
-    public SkinDisplay(int gameX, int gameY, List<String> imagePaths, int displayed, String lockPath, GamePanel gamePanel) {
+    public SkinDisplay(int gameX, int gameY, int displayed, GameObjectHandler gameObjectHandler) {
         this.gameX = gameX;
         this.gameY = gameY;
         this.displayed = displayed;
-        this.lock = importImage(lockPath);
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
+        this.exclamationMark = new ExclamationMark(gameX - 10, gameY - 50, 45, 80, () -> {
+            return (!gameObjectHandler.playerLocalDataHandler.isSkinSeen(gameObjectHandler.skinDisplay.displayed)) &&
+                    gameObjectHandler.playerAttributeHandler.getLevel() >= gameObjectHandler.skinDisplay.displayed;
+        }, gameObjectHandler);
 
         gameWidth = 53;
         gameHeight = 78;
-
-        for(String path : imagePaths) {
-            images.add(importImage(path));
-        }
-    }
-
-    protected Image importImage(String path) {
-        InputStream is = getClass().getResourceAsStream(path);
-        try {
-            return ImageIO.read(is);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     public void shiftLeft() {
+        if(!gameObjectHandler.playerLocalDataHandler.isSkinSeen(displayed) && gameObjectHandler.playerAttributeHandler.getLevel() >= displayed) {
+            gameObjectHandler.playerLocalDataHandler.seeSkin(displayed);
+        }
+
         displayed--;
         if(displayed == -1) {
-            displayed = images.size() - 1;
+            displayed = 18;
         }
     }
 
     public void shiftRight() {
+        if(!gameObjectHandler.playerLocalDataHandler.isSkinSeen(displayed) && gameObjectHandler.playerAttributeHandler.getLevel() >= displayed) {
+            gameObjectHandler.playerLocalDataHandler.seeSkin(displayed);
+        }
+
         displayed++;
-        if(displayed == images.size()) {
+        if(displayed == 19) {
             displayed = 0;
         }
     }
 
-    public Graphics draw(Graphics g) {
-        float[] screenCoords = CoordConversion.gameToScreen(new Float[]{((float) gameX), ((float) gameY)});
-        screenX = ((int) screenCoords[0]);
-        screenY = ((int) screenCoords[1]);
+    public List<?> getPosData() {
+        return List.of(0f, gameX / 1000f, gameY / 1000f, gameWidth / 1000f, gameHeight / 1000f);
+    }
 
-        float[] screenSize = CoordConversion.gameToScreen(new Float[]{((float) gameWidth), ((float) gameHeight)});
-        screenWidth = ((int) screenSize[0]);
-        screenHeight = ((int) screenSize[1]);
-
-        g.drawImage(images.get(displayed).getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX, screenY, null);
-        if(gamePanel.playerAttributeHandler.getLevel() < displayed) {
-            g.drawImage(lock.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT), screenX, screenY, null);
-        }
-        return g;
+    public List<?> getMiscData() {
+        return List.of(0, displayed + 1, gameObjectHandler.playerAttributeHandler.getLevel() < displayed ? 1 : 0);
     }
 }

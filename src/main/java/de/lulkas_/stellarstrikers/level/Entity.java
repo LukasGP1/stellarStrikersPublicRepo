@@ -1,7 +1,6 @@
 package de.lulkas_.stellarstrikers.level;
 
-import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.util.CoordConversion;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.enemys.Boss;
 import de.lulkas_.stellarstrikers.level.enemys.Enemy;
 
@@ -14,20 +13,18 @@ public abstract class Entity {
     protected final int gameHeight;
     protected float gameX;
     protected float gameY;
-    protected float[] screenCoords;
-    protected float[] screenSize;
     public int health;
     public boolean dead = false;
     public final int maxHealth;
-    protected final GamePanel gamePanel;
+    protected final GameObjectHandler gameObjectHandler;
     private List<Entity> collideWith;
 
-    public Entity(int gameWidth, int gameHeight, float startX, float startY, int health, GamePanel gamePanel) {
+    public Entity(int gameWidth, int gameHeight, float startX, float startY, int health, GameObjectHandler gameObjectHandler) {
         this.gameX = startX;
         this.gameY = startY;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
         this.hitbox = new Rectangle((int) gameX, (int) gameY, this.gameWidth, this.gameHeight);
         this.health = health;
         this.maxHealth = health;
@@ -46,15 +43,15 @@ public abstract class Entity {
         if(this.health <= 0) {
             this.dead = true;
             if(this instanceof Enemy) {
-                gamePanel.enemyWaveHandler.score(gamePanel.playerSkillHandler.getIncome());
-                gamePanel.playerStatisticsHandler.killEnemy();
-                gamePanel.powerUpHandler.killedEnemy(maxHealth, gamePanel.enemyWaveHandler.wave);
+                gameObjectHandler.enemyWaveHandler.score(gameObjectHandler.playerSkillHandler.getIncome());
+                gameObjectHandler.playerStatisticsHandler.killEnemy();
+                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyWaveHandler.wave);
             }
 
             if(this instanceof Boss) {
-                gamePanel.enemyWaveHandler.score(gamePanel.playerSkillHandler.getIncome() + 4);
-                gamePanel.playerStatisticsHandler.killBoss();
-                gamePanel.powerUpHandler.killedEnemy(maxHealth, gamePanel.enemyWaveHandler.wave);
+                gameObjectHandler.enemyWaveHandler.score(gameObjectHandler.playerSkillHandler.getIncome() + 4);
+                gameObjectHandler.playerStatisticsHandler.killBoss();
+                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyWaveHandler.wave);
             }
         }
         this.collideWith = getCollideWith();
@@ -67,12 +64,6 @@ public abstract class Entity {
                 collideWith(collideWith.get(i));
             }
         }
-    }
-
-    public Graphics draw(Graphics g) {
-        screenCoords = CoordConversion.gameToScreen(new Float[]{this.gameX, this.gameY});
-        screenSize = CoordConversion.gameToScreen(new Float[]{Float.valueOf(this.gameWidth), Float.valueOf(this.gameHeight)});
-        return g;
     }
 
     public abstract List<Entity> getCollideWith();

@@ -1,6 +1,6 @@
 package de.lulkas_.stellarstrikers.sound;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
@@ -16,13 +16,13 @@ public class MusicHandler {
     private AudioInputStream audioInputStream;
     private final String path;
     private final float volume;
-    private final GamePanel gamePanel;
+    private final GameObjectHandler gameObjectHandler;
 
-    public MusicHandler(String path, int length, float volume, GamePanel gamePanel) {
+    public MusicHandler(String path, int length, float volume, GameObjectHandler gameObjectHandler) {
         this.length = length;
         this.path = path;
         this.volume = volume;
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
         InputStream inputStream = SoundHandler.class.getResourceAsStream(path);
         try {
             assert inputStream != null;
@@ -38,7 +38,7 @@ public class MusicHandler {
     }
 
     public void start() {
-        if(gamePanel.playerOptionsHandler.isPlayingMusic()) {
+        if(gameObjectHandler.playerOptionsHandler.isPlayingMusic()) {
             shouldPlay = true;
         }
     }
@@ -47,12 +47,9 @@ public class MusicHandler {
         shouldPlay = false;
     }
 
-    public boolean isPlaying() {
-        return shouldPlay;
-    }
 
     public void tick() {
-        if(shouldPlay && gamePanel.playerOptionsHandler.isPlayingMusic()) {
+        if(shouldPlay && gameObjectHandler.playerOptionsHandler.isPlayingMusic()) {
             if(!playing) {
                 clip.start();
                 playing = true;

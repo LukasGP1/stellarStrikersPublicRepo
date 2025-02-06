@@ -1,18 +1,17 @@
 package de.lulkas_.stellarstrikers.level.powerUp;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.util.Random;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PowerUpHandler {
-    private List<PowerUp> powerUps = new ArrayList<>();
-    private GamePanel gamePanel;
+    public List<PowerUp> powerUps = new ArrayList<>();
+    private GameObjectHandler gameObjectHandler;
 
-    public PowerUpHandler(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public PowerUpHandler(GameObjectHandler gameObjectHandler) {
+        this.gameObjectHandler = gameObjectHandler;
     }
 
     public void tick() {
@@ -27,22 +26,15 @@ public class PowerUpHandler {
         }
     }
 
-    public Graphics draw(Graphics g) {
-        for(int i = 0; i < powerUps.size(); i++){
-            g = powerUps.get(i).draw(g);
-        }
-        return g;
-    }
-
-    public void killedEnemy(int maxHealth, int wave) {
+    public void killedEnemy(int wave) {
         if(Random.randomChance(0.1f)) {
             if(Random.randomChance(0.33f)) {
-                powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gamePanel, wave, PowerUp.PowerUpType.DAMAGE, maxHealth * 500));
+                powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, wave, PowerUp.PowerUpType.DAMAGE, 1500));
             } else {
-                if(Random.randomChance(0.5f)) {
-                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gamePanel, wave, PowerUp.PowerUpType.INCOME, maxHealth * 500));
+                if(Random.randomChance(0.9f)) {
+                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, wave, PowerUp.PowerUpType.INCOME, 1500));
                 } else {
-                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gamePanel, 25, PowerUp.PowerUpType.SHOOTING_SPEED, maxHealth * 500));
+                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, 25, PowerUp.PowerUpType.SHOOTING_SPEED, 1500));
                 }
             }
         }

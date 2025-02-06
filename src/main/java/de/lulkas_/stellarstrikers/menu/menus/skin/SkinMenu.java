@@ -1,46 +1,48 @@
 package de.lulkas_.stellarstrikers.menu.menus.skin;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.menu.Menu;
 import de.lulkas_.stellarstrikers.menu.button.Button;
 import de.lulkas_.stellarstrikers.menu.display.DisplayHandler;
-import de.lulkas_.stellarstrikers.menu.display.TemporaryIntDisplay;
 import de.lulkas_.stellarstrikers.sound.SoundHandler;
 
 import java.awt.*;
 
 public class SkinMenu extends Menu {
-    public SkinMenu(GamePanel gamePanel) {
-        super("/assets/textures/menu/skin_menu.png", gamePanel);
+    public SkinMenu(GameObjectHandler gameObjectHandler) {
+        super(gameObjectHandler);
 
         addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
-            gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
+            if(!gameObjectHandler.playerLocalDataHandler.isSkinSeen(gameObjectHandler.skinDisplay.displayed) && gameObjectHandler.playerAttributeHandler.getLevel() >= gameObjectHandler.skinDisplay.displayed) {
+                gameObjectHandler.playerLocalDataHandler.seeSkin(gameObjectHandler.skinDisplay.displayed);
+            }
+
+            gameObjectHandler.gameState = GameObjectHandler.GameState.ENTER_MAIN_MENU;
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
         }));
 
         addButton(new Button(new Rectangle(280, 189, 46, 56), () -> {
-            gamePanel.skinDisplay.shiftLeft();
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
+            gameObjectHandler.skinDisplay.shiftLeft();
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
         }));
 
         addButton(new Button(new Rectangle(669, 191, 46, 56), () -> {
-            gamePanel.skinDisplay.shiftRight();
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
+            gameObjectHandler.skinDisplay.shiftRight();
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
         }));
 
         addButton(new Button(new Rectangle(280, 632, 439, 113), () -> {
-            if(gamePanel.playerAttributeHandler.getLevel() >= gamePanel.skinDisplay.displayed) {
-                gamePanel.playerAttributeHandler.setSkinDisplayed(gamePanel.skinDisplay.displayed);
-                SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
+            if(gameObjectHandler.playerAttributeHandler.getLevel() >= gameObjectHandler.skinDisplay.displayed) {
+                gameObjectHandler.playerAttributeHandler.setSkinDisplayed(gameObjectHandler.skinDisplay.displayed);
+                SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
             } else {
-                ((TemporaryIntDisplay) displayHandler.displays.get(0)).appear(300);
-                SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
+                SoundHandler.playSound("/sounds/menu/error.wav", -2f, gameObjectHandler);
             }
         }));
     }
 
     @Override
     protected DisplayHandler createDisplayHandler() {
-        return new SkinDisplayHandler(gamePanel.skinDisplay);
+        return new SkinDisplayHandler(gameObjectHandler.skinDisplay);
     }
 }

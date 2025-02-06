@@ -1,6 +1,5 @@
 package de.lulkas_.stellarstrikers.menu.display;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +14,5 @@ public class DisplayHandler {
         for(int i = 0; i < displays.size(); i++) {
             displays.get(i).tick();
         }
-    }
-
-    public Graphics draw(Graphics g) {
-        for(int i = 0; i < displays.size(); i++) {
-            g = displays.get(i).draw(g);
-        }
-        return g;
     }
 }

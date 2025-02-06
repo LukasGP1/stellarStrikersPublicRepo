@@ -1,7 +1,6 @@
 package de.lulkas_.stellarstrikers.level.enemys;
 
-import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.Main;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.Entity;
 import de.lulkas_.stellarstrikers.level.LevelFileFormatException;
 
@@ -11,13 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WaveSpawnHandler {
-    public static void spawnWave(int wave, GamePanel gamePanel, EnemyWaveHandler enemyWaveHandler) {
+    public static void spawnWave(int wave, GameObjectHandler gameObjectHandler, EnemyWaveHandler enemyWaveHandler) {
         List<Entity> enemies;
         try {
-            enemies = readWave(wave, gamePanel);
+            enemies = readWave(wave, gameObjectHandler);
             System.out.println("from file");
         } catch (NullPointerException e) {
-            enemies = generateWave(wave, gamePanel);
+            enemies = generateWave(wave, gameObjectHandler);
             System.out.println("generated");
         }
         for(Entity entity : enemies) {
@@ -29,7 +28,7 @@ public class WaveSpawnHandler {
         }
     }
 
-    private static List<Entity> readWave(int wave, GamePanel gamePanel) {
+    private static List<Entity> readWave(int wave, GameObjectHandler gameObjectHandler) {
         InputStream inputStream = WaveSpawnHandler.class.getResourceAsStream("/waves/" + wave + ".wdat");
         Scanner scanner = new Scanner(inputStream);
         List<StringBuilder> enemies = new ArrayList<>();
@@ -79,21 +78,21 @@ public class WaveSpawnHandler {
 
                 if(enemy.charAt(0) == 'e') {
                     if(enemy.charAt(2) == 'N') {
-                        toReturn.add(new Enemy(x, y, speed, ((int) health), gamePanel, Enemy.EnemyType.NORMAL));
+                        toReturn.add(new Enemy(x, y, speed, ((int) health), gameObjectHandler, Enemy.EnemyType.NORMAL));
                     } else if(enemy.charAt(2) == 'S') {
-                        toReturn.add(new Enemy(x, y, speed, ((int) health), gamePanel, Enemy.EnemyType.SNIPER));
+                        toReturn.add(new Enemy(x, y, speed, ((int) health), gameObjectHandler, Enemy.EnemyType.SNIPER));
                     } else if (enemy.charAt(2) == 'G') {
-                        toReturn.add(new Enemy(x, y, speed, ((int) health), gamePanel, Enemy.EnemyType.GUNNER));
+                        toReturn.add(new Enemy(x, y, speed, ((int) health), gameObjectHandler, Enemy.EnemyType.GUNNER));
                     } else {
                         throw new LevelFileFormatException();
                     }
                 } else if(enemy.charAt(0) == 'b') {
                     if(enemy.charAt(2) == 'N') {
-                        toReturn.add(new Boss(x, y, ((int) health), speed, gamePanel, Boss.BossType.NORMAL));
+                        toReturn.add(new Boss(x, y, ((int) health), speed, gameObjectHandler, Boss.BossType.NORMAL));
                     } else if(enemy.charAt(2) == 'S') {
-                        toReturn.add(new Boss(x, y, ((int) health), speed, gamePanel, Boss.BossType.SNIPER));
+                        toReturn.add(new Boss(x, y, ((int) health), speed, gameObjectHandler, Boss.BossType.SNIPER));
                     } else if (enemy.charAt(2) == 'G') {
-                        toReturn.add(new Boss(x, y, ((int) health), speed, gamePanel, Boss.BossType.GUNNER));
+                        toReturn.add(new Boss(x, y, ((int) health), speed, gameObjectHandler, Boss.BossType.GUNNER));
                     } else {
                         throw new LevelFileFormatException();
                     }
@@ -109,7 +108,7 @@ public class WaveSpawnHandler {
         return toReturn;
     }
 
-    private static List<Entity> generateWave(int wave, GamePanel gamePanel) {
+    private static List<Entity> generateWave(int wave, GameObjectHandler gameObjectHandler) {
         List<Entity> toReturn = new ArrayList<>();
 
         if(((int) (wave / 5)) * 5 == wave) {
@@ -123,7 +122,7 @@ public class WaveSpawnHandler {
                 type = Boss.BossType.GUNNER;
             }
 
-            toReturn.add(new Boss(400, 300, (wave / 5) * 25, 3.0f, gamePanel, type));
+            toReturn.add(new Boss(400, 300, (wave / 5) * 25, 3.0f, gameObjectHandler, type));
         } else {
             Enemy.EnemyType type1 = Enemy.EnemyType.NORMAL;
             Enemy.EnemyType type2 = Enemy.EnemyType.NORMAL;
@@ -133,11 +132,11 @@ public class WaveSpawnHandler {
             if(wave > 10) {
                 type1 = Enemy.EnemyType.GUNNER;
             }
-            toReturn.add(new Enemy(200, 400, 0.1f, 2 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy(420, 400, 0.1f, 3 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy(630, 400, 0.1f, 2 + wave - 3, gamePanel, type1));
-            toReturn.add(new Enemy(520, 200, 0.1f, 1 + wave - 3, gamePanel, type2));
-            toReturn.add(new Enemy(310, 200, 0.1f, 1 + wave - 3, gamePanel, type2));
+            toReturn.add(new Enemy(200, 400, 0.1f, 2 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(420, 400, 0.1f, 3 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(630, 400, 0.1f, 2 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(520, 200, 0.1f, 1 + wave - 3, gameObjectHandler, type2));
+            toReturn.add(new Enemy(310, 200, 0.1f, 1 + wave - 3, gameObjectHandler, type2));
         }
 
         return toReturn;

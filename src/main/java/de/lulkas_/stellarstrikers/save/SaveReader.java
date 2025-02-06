@@ -1,17 +1,19 @@
 package de.lulkas_.stellarstrikers.save;
 
-import de.lulkas_.stellarstrikers.GamePanel;
-import de.lulkas_.stellarstrikers.attributes.PlayerAttributeHandler;
-import de.lulkas_.stellarstrikers.attributes.PlayerOptionsHandler;
-import de.lulkas_.stellarstrikers.attributes.PlayerSkillHandler;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
+import de.lulkas_.stellarstrikers.playerData.PLayerLocalDataHandler;
+import de.lulkas_.stellarstrikers.playerData.PlayerAttributeHandler;
+import de.lulkas_.stellarstrikers.playerData.PlayerOptionsHandler;
+import de.lulkas_.stellarstrikers.playerData.PlayerSkillHandler;
 import org.gamejolt.DataStore;
 import org.gamejolt.GameJoltAPI;
 
 import java.awt.*;
-import java.util.NoSuchElementException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class SaveReader {
-    private final int saveFile;
     private int score = 0;
     private int level = 0;
     private int levelPoints = 0;
@@ -25,25 +27,29 @@ public class SaveReader {
     private boolean playingMusic = true;
     private Color playerBulletColor = new Color(0, 255, 0);
     private Color enemyBulletColor = new Color(0, 255, 0);
-    private Color bombColor = new Color(255, 204, 0, 252);
+    private Color bombColor = new Color(255, 255, 0);
     private Color detonatedBombColor = new Color(255, 0, 0);
+    private Integer lastSkinSeen = 0;
 
-    public SaveReader(int saveFile, GameJoltAPI api) {
-        this.saveFile = saveFile;
+    public SaveReader(GameJoltAPI api) {
         this.api = api;
-        getFromApi();
+        getFromSave();
     }
 
-    public PlayerAttributeHandler getPlayerAttributeHandler(GamePanel gamePanel) {
-        return new PlayerAttributeHandler(score, level, levelPoints, levelingCost, skin, gamePanel);
+    public PlayerAttributeHandler getPlayerAttributeHandler(GameObjectHandler gameObjectHandler) {
+        return new PlayerAttributeHandler(score, level, levelPoints, levelingCost, skin, gameObjectHandler);
     }
 
-    public PlayerSkillHandler getPlayerSkillHandler(GamePanel gamePanel) {
-        return new PlayerSkillHandler(damage, health, income, gamePanel);
+    public PlayerSkillHandler getPlayerSkillHandler(GameObjectHandler gameObjectHandler) {
+        return new PlayerSkillHandler(damage, health, income, gameObjectHandler);
     }
 
     public PlayerOptionsHandler getPLayerOptionsHandler() {
         return new PlayerOptionsHandler(playingSound, playingMusic, playerBulletColor, enemyBulletColor, bombColor, detonatedBombColor);
+    }
+
+    public PLayerLocalDataHandler getPlayerLocalDataHandler() {
+        return  new PLayerLocalDataHandler(lastSkinSeen);
     }
 
     public void reset() {
@@ -56,7 +62,7 @@ public class SaveReader {
         income = 1;
     }
 
-    public void getFromApi() {
+    public void getFromSave() {
         try {
             score = Integer.parseInt(api.getDataStore(DataStore.DataStoreType.USER, "score").getData());
             level = Integer.parseInt(api.getDataStore(DataStore.DataStoreType.USER, "level").getData());
@@ -73,7 +79,15 @@ public class SaveReader {
             bombColor = new Color(Integer.parseInt(api.getDataStore(DataStore.DataStoreType.USER, "bomb_color").getData()));
             detonatedBombColor = new Color(Integer.parseInt(api.getDataStore(DataStore.DataStoreType.USER, "detonated_bomb_color").getData()));
         } catch (NullPointerException | NumberFormatException | NoSuchElementException e) {
-            System.out.println("no data saved");
+            System.out.println("no data saved in api");
+        }
+
+        try {
+            File localDataFile = new File("localData.dat");
+            Scanner scanner = new Scanner(localDataFile);
+            lastSkinSeen = Integer.valueOf(scanner.nextLine());
+        } catch (FileNotFoundException | NoSuchElementException e) {
+            System.out.println("No local data saved");
         }
     }
 }

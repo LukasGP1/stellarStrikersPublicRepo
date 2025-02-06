@@ -1,6 +1,6 @@
 package de.lulkas_.stellarstrikers.sound;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 
 import javax.sound.sampled.*;
 import java.io.BufferedInputStream;
@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class SoundHandler {
-    public static void playSound(String filepath, Float volume, GamePanel gamePanel) {
-        if(gamePanel.playerOptionsHandler.isPlayingSound()) {
+    public static void playSound(String filepath, Float volume, GameObjectHandler gameObjectHandler) {
+        if(gameObjectHandler.playerOptionsHandler.isPlayingSound()) {
             try {
                 InputStream inputStream = SoundHandler.class.getResourceAsStream(filepath);
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream));

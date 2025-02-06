@@ -1,21 +1,21 @@
 package de.lulkas_.stellarstrikers.inputs;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseInputs implements MouseListener, MouseMotionListener {
-    private GamePanel gamePanel;
+    private GameObjectHandler gameObjectHandler;
 
-    public MouseInputs(GamePanel gamePanel) {
-        this.gamePanel = gamePanel;
+    public MouseInputs(GameObjectHandler gameObjectHandler) {
+        this.gameObjectHandler = gameObjectHandler;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        this.gamePanel.lastClick = e;
+        this.gameObjectHandler.lastClick = e;
     }
 
     @Override

@@ -29,9 +29,4 @@ public class Button implements Clickable {
     public void tick() {
         screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
-
-    @Override
-    public Graphics draw(Graphics g) {
-        return g;
-    }
 }

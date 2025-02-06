@@ -6,5 +6,4 @@ public interface Clickable {
     Rectangle getClickingArea();
     Runnable getWhenCLicked();
     void tick();
-    Graphics draw(Graphics g);
 }

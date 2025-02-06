@@ -1,40 +1,31 @@
 package de.lulkas_.stellarstrikers.level.enemys;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.Main;
 import de.lulkas_.stellarstrikers.level.Entity;
-import de.lulkas_.stellarstrikers.level.Textured;
 import de.lulkas_.stellarstrikers.level.projectile.Bullet;
 import de.lulkas_.stellarstrikers.sound.SoundHandler;
 import de.lulkas_.stellarstrikers.util.Random;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Enemy extends Textured {
+public class Enemy extends Entity {
     public List<Bullet> bullets = new ArrayList<>();
     private int bulletCooldown;
-    private final float startX, startY;
+    private final float startX;
     private final float speed;
     private MovementState movementState = MovementState.LEFT;
-    private final Image damage1;
-    private final Image damage2;
-    private final Image empty;
-    private final GamePanel gamePanel;
+    private final GameObjectHandler gameObjectHandler;
     private final EnemyType type;
 
-    public Enemy(float startX, float startY, float speed, int health, GamePanel gamePanel, EnemyType type) {
-        super(startX, startY, type.texture, 53, 78, health, gamePanel);
+    public Enemy(float startX, float startY, float speed, int health, GameObjectHandler gameObjectHandler, EnemyType type) {
+        super(53, 78, startX, startY, health, gameObjectHandler);
         this.startX = startX;
-        this.startY = startY;
         this.speed = speed;
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
         this.type = type;
         this.bulletCooldown = Random.randomInt(type.shootCooldown + 200, type.shootCooldown);
-        damage1 = importImage("/assets/textures/enemy/damage_overlay_1.png");
-        damage2 = importImage("/assets/textures/enemy/damage_overlay_2.png");
-        empty = importImage("/assets/textures/enemy/empty.png");
     }
 
     @Override
@@ -54,18 +45,18 @@ public class Enemy extends Textured {
     }
 
     public void shoot() {
-        this.bullets.add(new Bullet(this.gameX + ((int) (0.5 * gameWidth)), this.gameY + gameHeight, type.bulletSpeed, getBulletTravelDirectionX(), this, gamePanel, gamePanel.playerOptionsHandler.getEnemyBulletColor()));
-        SoundHandler.playSound("/assets/sounds/level/shoot_enemy.wav", -10f, gamePanel);
+        this.bullets.add(new Bullet(this.gameX + ((int) (0.5 * gameWidth)), this.gameY + gameHeight, type.bulletSpeed, getBulletTravelDirectionX(), this, gameObjectHandler, gameObjectHandler.playerOptionsHandler.getEnemyBulletColor()));
+        SoundHandler.playSound("/sounds/level/shoot_enemy.wav", -10f, gameObjectHandler);
     }
 
     public float getBulletTicks() {
-        float bulletYDistance = gamePanel.player.getGameY() - this.gameY - 64;
+        float bulletYDistance = gameObjectHandler.player.getGameY() - this.gameY - 64;
         return bulletYDistance / type.bulletSpeed;
     }
 
     public float getBulletTravelDirectionX() {
         if(type.aims) {
-            float bulletXDistance = gamePanel.player.getGameX() - this.gameX - 32;
+            float bulletXDistance = gameObjectHandler.player.getGameX() - this.gameX - 32;
             return bulletXDistance / getBulletTicks();
         } else {
             return 0;
@@ -75,27 +66,27 @@ public class Enemy extends Textured {
     @Override
     public List<Entity> getCollideWith() {
         List<Entity> toReturn = new ArrayList<>(List.of());
-        toReturn.addAll(gamePanel.player.bullets);
+        toReturn.addAll(gameObjectHandler.player.bullets);
         return toReturn;
     }
 
     @Override
     public void collideWith(Entity entity) {
-        this.health -= gamePanel.playerSkillHandler.getDamage();
+        this.health -= gameObjectHandler.playerSkillHandler.getDamage();
         entity.dead = true;
-        SoundHandler.playSound("/assets/sounds/level/ding_break.wav", -2f, gamePanel);
+        SoundHandler.playSound("/sounds/level/ding_break.wav", -2f, gameObjectHandler);
     }
 
     private void updateMovement() {
         if(this.movementState == MovementState.LEFT) {
-            if(Math.abs(this.gameX - this.startX) < (float) (0.05 * Main.game.window.getWidth())) {
+            if(Math.abs(this.gameX - this.startX) < (float) (0.05 * Main.gameLoop.window.getWidth())) {
                 this.gameX -= this.speed;
             } else {
                 this.movementState = MovementState.RIGHT;
                 this.gameX += this.speed;
             }
         } else {
-            if(Math.abs(this.gameX - this.startX) < (float) (0.05 * Main.game.window.getWidth())) {
+            if(Math.abs(this.gameX - this.startX) < (float) (0.05 * Main.gameLoop.window.getWidth())) {
                 this.gameX += this.speed;
             } else {
                 this.movementState = MovementState.LEFT;
@@ -104,19 +95,12 @@ public class Enemy extends Textured {
         }
     }
 
-    @Override
-    public Graphics draw(Graphics g) {
-        g = super.draw(g);
-        g.drawImage(getDamageOverlay().getScaledInstance(((int) screenSize[0]), ((int) screenSize[1]), Image.SCALE_DEFAULT), ((int) screenCoords[0]), ((int) screenCoords[1]), null);
-        g = drawBullets(g);
-        return g;
+    public List<?> getPosData() {
+        return List.of(0f, gameX / 1000f, gameY / 1000f, gameWidth / 1000f, gameHeight / 1000f);
     }
 
-    private Graphics drawBullets(Graphics g) {
-        for (int i = 0; i < this.bullets.size(); i++) {
-            g = this.bullets.get(i).draw(g);
-        }
-        return g;
+    public List<?> getMiscData() {
+        return List.of(0, type.shaderValue, getDamageOverlay());
     }
 
     private void updateBullets() {
@@ -132,15 +116,15 @@ public class Enemy extends Textured {
         }
     }
 
-    private Image getDamageOverlay() {
+    private int getDamageOverlay() {
         float percentHealthLeft = ((float) this.health) / ((float) this.maxHealth);
 
         if(percentHealthLeft < 0.4f) {
-            return damage2;
+            return 2;
         } else if (percentHealthLeft < 0.8f) {
-            return damage1;
+            return 5;
         } else {
-            return empty;
+            return 12;
         }
     }
 
@@ -150,20 +134,22 @@ public class Enemy extends Textured {
     }
 
     public enum EnemyType {
-        NORMAL("/assets/textures/enemy/enemy.png", false, 3.0f, 300),
-        SNIPER("/assets/textures/enemy/sniper.png", true, 1.0f, 400),
-        GUNNER("/assets/textures/enemy/gunner.png", false, 3.0f, 100);
+        NORMAL("/assets/textures/enemy/enemy.png", false, 3.0f, 300, 0),
+        SNIPER("/assets/textures/enemy/sniper.png", true, 1.0f, 400, 1),
+        GUNNER("/assets/textures/enemy/gunner.png", false, 3.0f, 100, 2);
 
         public final String texture;
         public final boolean aims;
         public final float bulletSpeed;
         public final int shootCooldown;
+        public final int shaderValue;
 
-        EnemyType(String s, boolean aims, float bulletSpeed, int shootCooldown) {
+        EnemyType(String s, boolean aims, float bulletSpeed, int shootCooldown, int shaderValue) {
             this.texture = s;
             this.aims = aims;
             this.bulletSpeed = bulletSpeed;
             this.shootCooldown = shootCooldown;
+            this.shaderValue = shaderValue;
         }
     }
 }

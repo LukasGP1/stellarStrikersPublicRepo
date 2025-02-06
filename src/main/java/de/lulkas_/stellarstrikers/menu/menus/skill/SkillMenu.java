@@ -1,6 +1,6 @@
 package de.lulkas_.stellarstrikers.menu.menus.skill;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.menu.Menu;
 import de.lulkas_.stellarstrikers.menu.button.Button;
 import de.lulkas_.stellarstrikers.menu.display.DisplayHandler;
@@ -10,12 +10,12 @@ import de.lulkas_.stellarstrikers.sound.SoundHandler;
 import java.awt.*;
 
 public class SkillMenu extends Menu {
-    public SkillMenu(GamePanel gamePanel) {
-        super("/assets/textures/menu/skill_menu.png", gamePanel);
+    public SkillMenu(GameObjectHandler gameObjectHandler) {
+        super(gameObjectHandler);
 
         addButton(new Button(new Rectangle(280, 800, 439, 111), () -> {
-            gamePanel.gameState = GamePanel.GameState.ENTER_MAIN_MENU;
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
+            gameObjectHandler.gameState = GameObjectHandler.GameState.ENTER_MAIN_MENU;
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
         }));
 
         addButton(new Button(new Rectangle(281, 410, 124, 335), this::upgradeIncome));
@@ -26,50 +26,50 @@ public class SkillMenu extends Menu {
     }
 
     private void resetSkills() {
-        gamePanel.playerAttributeHandler.resetLevelPoints();
-        gamePanel.playerAttributeHandler.gainLevelPoints(gamePanel.playerAttributeHandler.getLevel());
-        gamePanel.playerSkillHandler.resetSkills();
-        gamePanel.saveWriter.save();
+        gameObjectHandler.playerAttributeHandler.resetLevelPoints();
+        gameObjectHandler.playerAttributeHandler.gainLevelPoints(gameObjectHandler.playerAttributeHandler.getLevel());
+        gameObjectHandler.playerSkillHandler.resetSkills();
+        gameObjectHandler.saveWriter.save();
     }
 
     private void upgradeIncome() {
-        if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
-            gamePanel.playerSkillHandler.upgradeIncome(1);
-            gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
-            gamePanel.saveWriter.save();
+        if(gameObjectHandler.playerAttributeHandler.getLevelPoints() >= 2) {
+            gameObjectHandler.playerSkillHandler.upgradeIncome(1);
+            gameObjectHandler.playerAttributeHandler.spendLevelPoints(2);
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
+            gameObjectHandler.saveWriter.save();
         } else {
-            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gameObjectHandler);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }
 
     private void upgradeDamage() {
-        if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
-            gamePanel.playerSkillHandler.upgradeDamage(1);
-            gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
-            gamePanel.saveWriter.save();
+        if(gameObjectHandler.playerAttributeHandler.getLevelPoints() >= 2) {
+            gameObjectHandler.playerSkillHandler.upgradeDamage(1);
+            gameObjectHandler.playerAttributeHandler.spendLevelPoints(2);
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
+            gameObjectHandler.saveWriter.save();
         } else {
-            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gameObjectHandler);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }
 
     private void upgradeHealth() {
-        if(gamePanel.playerAttributeHandler.getLevelPoints() >= 2) {
-            gamePanel.playerSkillHandler.upgradeHealth(1);
-            gamePanel.playerAttributeHandler.spendLevelPoints(2);
-            SoundHandler.playSound("/assets/sounds/menu/click.wav", -2f, gamePanel);
-            gamePanel.saveWriter.save();
+        if(gameObjectHandler.playerAttributeHandler.getLevelPoints() >= 2) {
+            gameObjectHandler.playerSkillHandler.upgradeHealth(1);
+            gameObjectHandler.playerAttributeHandler.spendLevelPoints(2);
+            SoundHandler.playSound("/sounds/menu/click.wav", -2f, gameObjectHandler);
+            gameObjectHandler.saveWriter.save();
         } else {
-            SoundHandler.playSound("/assets/sounds/menu/error.wav", -2f, gamePanel);
+            SoundHandler.playSound("/sounds/menu/error.wav", -2f, gameObjectHandler);
             ((TemporaryDisplay) displayHandler.displays.get(1)).appear(300);
         }
     }
 
     @Override
     protected DisplayHandler createDisplayHandler() {
-        return new SkillDisplayHandler(gamePanel.playerAttributeHandler);
+        return new SkillDisplayHandler(gameObjectHandler.playerAttributeHandler);
     }
 }

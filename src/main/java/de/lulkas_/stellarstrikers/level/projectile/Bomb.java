@@ -1,9 +1,7 @@
 package de.lulkas_.stellarstrikers.level.projectile;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.Entity;
-import de.lulkas_.stellarstrikers.level.Textured;
-import de.lulkas_.stellarstrikers.util.CoordConversion;
 
 import java.awt.*;
 import java.util.List;
@@ -11,30 +9,26 @@ import java.util.List;
 public class Bomb extends Entity {
     private final float travelDirectionY;
     private final float travelDirectionX;
-    public final Textured firedBy;
+    public final Entity firedBy;
     private int ticks;
     public boolean detonated = false;
-    private final GamePanel gamePanel;
-    private final Color color;
-    private final Color detonatedColor;
+    private final GameObjectHandler gameObjectHandler;
 
-    public Bomb(float startX, float startY, GamePanel gamePanel, float travelDirectionY, float travelDirectionX, Textured firedBy, int ticks, GamePanel gamePanel1, Color color, Color detonatedColor) {
-        super(36, 64, startX, startY, 1, gamePanel);
+    public Bomb(float startX, float startY, GameObjectHandler gameObjectHandler, float travelDirectionY, float travelDirectionX, Entity firedBy, int ticks) {
+        super(36, 64, startX, startY, 1, gameObjectHandler);
         this.travelDirectionY = travelDirectionY;
         this.travelDirectionX = travelDirectionX;
         this.firedBy = firedBy;
         this.ticks = ticks;
-        this.gamePanel = gamePanel1;
-        this.color = color;
-        this.detonatedColor = detonatedColor;
+        this.gameObjectHandler = gameObjectHandler;
     }
 
     @Override
     protected void updateHitbox() {
         if(detonated) {
-            hitbox = new Rectangle(((int) (gameX - gameWidth / 2)), ((int) (gameY - gameHeight / 2)), ((int) (gameWidth * 1.5f)), ((int) (gameHeight * 1.5f)));
+            hitbox = new Rectangle(((int) (gameX - gameWidth / 2f)), ((int) (gameY - gameHeight / 2f)), ((int) (gameWidth * 1.5f)), ((int) (gameHeight * 1.5f)));
         } else {
-            hitbox = new Rectangle((int) gameX, (int) gameY, ((int) (gameWidth / 8 * 3)), ((int) (gameHeight / 8 * 3)));
+            hitbox = new Rectangle((int) gameX, (int) gameY, gameWidth / 8 * 3, gameHeight / 8 * 3);
         }
     }
 
@@ -68,7 +62,7 @@ public class Bomb extends Entity {
 
     @Override
     public List<Entity> getCollideWith() {
-        return List.of(gamePanel.player);
+        return List.of(gameObjectHandler.player);
     }
 
     @Override
@@ -76,16 +70,11 @@ public class Bomb extends Entity {
 
     }
 
-    @Override
-    public Graphics draw(Graphics g) {
-        g = super.draw(g);
+    public List<?> getPosData() {
+        return List.of(0f, gameX / 1000f, gameY / 1000f, gameWidth / 1000f, gameHeight / 1000f);
+    }
 
-        if(detonated) {
-            g.setColor(detonatedColor);
-            g.fillOval(((int) this.screenCoords[0]) - ((int) (screenSize[0] * 2f)) / 2 + ((int) (screenSize[0] / 8 * 3)) / 2, ((int) screenCoords[1]) - ((int) (screenSize[1] * 2f)) / 2 + ((int) (screenSize[1] / 8 * 3)) / 2, ((int) (screenSize[0] * 2f)), ((int) (screenSize[1] * 2f)));
-        }
-        g.setColor(color);
-        g.fillRect((int) screenCoords[0], (int) screenCoords[1], ((int) (screenSize[0] / 8 * 3)), ((int) (screenSize[1] / 8 * 3)));
-        return g;
+    public List<?> getMiscData() {
+        return List.of(0, detonated ? 1 : 0);
     }
 }

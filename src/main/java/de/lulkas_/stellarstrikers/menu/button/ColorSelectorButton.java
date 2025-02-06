@@ -4,6 +4,7 @@ import de.lulkas_.stellarstrikers.util.CoordConversion;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class ColorSelectorButton implements Clickable {
     private final Rectangle gameClickingArea;
@@ -39,11 +40,12 @@ public class ColorSelectorButton implements Clickable {
         screenClickingArea = CoordConversion.gameToScreen(gameClickingArea);
     }
 
-    @Override
-    public Graphics draw(Graphics g) {
-        g.setColor(color);
-        g.fillRect(getClickingArea().x, getClickingArea().y, getClickingArea().width, getClickingArea().height);
-        return g;
+    public List<?> getPosData() {
+        return List.of(0f, gameClickingArea.x / 1000f, gameClickingArea.y / 1000f, gameClickingArea.width / 1000f, gameClickingArea.height / 1000f);
+    }
+
+    public List<?> getMiscData() {
+        return List.of(0f, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
     }
 
     public Color getColor() {

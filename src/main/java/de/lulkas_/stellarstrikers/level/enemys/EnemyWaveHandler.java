@@ -1,10 +1,8 @@
 package de.lulkas_.stellarstrikers.level.enemys;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.player.Player;
-import de.lulkas_.stellarstrikers.menu.display.TemporaryIntDisplay;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class EnemyWaveHandler {
     public WaveState waveState = WaveState.DEFEATED;
     public List<Enemy> enemies = new ArrayList<>();
     public List<Boss> bosses = new ArrayList<>();
-    private GamePanel gamePanel;
+    private GameObjectHandler gameObjectHandler;
     private Player player;
     public int spawningTicks = 120;
     private int waves;
@@ -33,7 +31,7 @@ public class EnemyWaveHandler {
             }
         }
 
-        tickEnemys();
+        tickEnemies();
         tickBosses();
 
         if(this.waveState == WaveState.SPAWNED && this.enemies.size() == 0 && this.bosses.size() == 0) {
@@ -41,14 +39,13 @@ public class EnemyWaveHandler {
         }
 
         if(this.waveState == WaveState.DEFEATED) {
-            apiThread = new Thread(() -> gamePanel.api.addHighscore(968819, wave.toString(), wave));
+            apiThread = new Thread(() -> gameObjectHandler.api.addHighscore(968819, wave.toString(), wave));
             apiThread.start();
             this.wave += 1;
             if(wave == waves + 1) {
-                gamePanel.gameState = GamePanel.GameState.ENTER_WON_MENU;
+                gameObjectHandler.gameState = GameObjectHandler.GameState.ENTER_WON_MENU;
             } else {
                 waveState = WaveState.SPAWNING;
-                ((TemporaryIntDisplay) gamePanel.gameMenu.displayHandler.displays.get(2)).appear(120);
             }
         }
 
@@ -58,12 +55,12 @@ public class EnemyWaveHandler {
                 this.player.health = this.player.maxHealth;
             }
             if(spawningTicks <= 0) {
-                spawnEnemys();
+                spawnEnemies();
             }
         }
     }
 
-    private void tickEnemys() {
+    private void tickEnemies() {
         for(int i = 0; i < this.enemies.size(); i++) {
             this.enemies.get(i).tick();
         }
@@ -75,28 +72,18 @@ public class EnemyWaveHandler {
         }
     }
 
-    public EnemyWaveHandler(int startScore, GamePanel gamePanel, Player player, int waves) {
+    public EnemyWaveHandler(int startScore, GameObjectHandler gameObjectHandler, Player player, int waves) {
         this.singleGameScore = startScore;
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
         this.player = player;
         this.waves = waves;
     }
 
-    private void spawnEnemys() {
-        WaveSpawnHandler.spawnWave(this.wave, gamePanel, this);
+    private void spawnEnemies() {
+        WaveSpawnHandler.spawnWave(this.wave, gameObjectHandler, this);
 
         waveState = WaveState.SPAWNED;
         spawningTicks = 120;
-    }
-
-    public Graphics draw(Graphics g) {
-        for(int i = 0; i < enemies.size(); i++) {
-            g = enemies.get(i).draw(g);
-        }
-        for(int i = 0; i < bosses.size(); i++) {
-            g = bosses.get(i).draw(g);
-        }
-        return g;
     }
 
     public enum WaveState {
@@ -111,5 +98,27 @@ public class EnemyWaveHandler {
 
     public void score(int amount) {
         singleGameScore += amount;
+    }
+
+    public int getDisplayBossTicks() {
+        if(gameObjectHandler.gameState == GameObjectHandler.GameState.PLAYING) {
+            if(((int) (this.wave / 5)) * 5 == this.wave) {
+                if(this.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
+                    return this.spawningTicks;
+                } else {
+                    return 0;
+                }
+            } else if (((int) ((this.wave - 1) / 5)) * 5 == this.wave - 1 && this.wave != 1) {
+                if(this.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
+                    return 120 - gameObjectHandler.enemyWaveHandler.spawningTicks;
+                } else {
+                    return 120;
+                }
+            } else  {
+                return 120;
+            }
+        } else {
+            return 120;
+        }
     }
 }

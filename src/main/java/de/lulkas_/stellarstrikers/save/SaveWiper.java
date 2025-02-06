@@ -1,16 +1,20 @@
 package de.lulkas_.stellarstrikers.save;
 
-import de.lulkas_.stellarstrikers.GamePanel;
+import de.lulkas_.stellarstrikers.GameObjectHandler;
 import org.gamejolt.DataStore;
 import org.gamejolt.GameJoltAPI;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class SaveWiper {
     private final GameJoltAPI api;
-    private final GamePanel gamePanel;
+    private final GameObjectHandler gameObjectHandler;
 
-    public SaveWiper(GameJoltAPI api, GamePanel gamePanel) {
+    public SaveWiper(GameJoltAPI api, GameObjectHandler gameObjectHandler) {
         this.api = api;
-        this.gamePanel = gamePanel;
+        this.gameObjectHandler = gameObjectHandler;
     }
 
     public void wipe() {
@@ -28,6 +32,15 @@ public class SaveWiper {
         api.removeDataStore(DataStore.DataStoreType.USER, "enemy_bullet_color");
         api.removeDataStore(DataStore.DataStoreType.USER, "bomb_color");
         api.removeDataStore(DataStore.DataStoreType.USER, "detonated_bomb_color");
+
+        try {
+            File localDataFile = new File("localData.dat");
+            FileWriter fileWriter = new FileWriter(localDataFile);
+            fileWriter.write("");
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("could not wipe local data");
+        }
 
         api.sessionClose();
 

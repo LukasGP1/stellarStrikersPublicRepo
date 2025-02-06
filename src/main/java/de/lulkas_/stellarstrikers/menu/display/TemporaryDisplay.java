@@ -1,13 +1,13 @@
 package de.lulkas_.stellarstrikers.menu.display;
 
-import java.awt.*;
+import java.util.List;
 
 public class TemporaryDisplay extends Display {
     private int ticks;
     public boolean visible = false;
 
-    public TemporaryDisplay(Color color, int fontSize, int gameX, int gameY, String text, int gameWidth, int gameHeight) {
-        super(color, fontSize, gameX, gameY, text, gameWidth, gameHeight);
+    public TemporaryDisplay(int gameX, int gameY, int gameWidth, int gameHeight) {
+        super(gameX, gameY, gameWidth, gameHeight);
     }
 
     public void appear(int ticks) {
@@ -27,12 +27,11 @@ public class TemporaryDisplay extends Display {
         }
     }
 
-    @Override
-    public Graphics draw(Graphics g) {
-        if(visible) {
-            return super.draw(g);
-        } else {
-            return g;
-        }
+    public List<?> getMiscData() {
+        return List.of(0, visible ? 1 : 0);
+    }
+
+    public List<?> getPosData() {
+        return List.of(0f, gameX / 1000f, gameY / 1000f, gameWidth / 1000f, gameHeight / 1000f);
     }
 }
