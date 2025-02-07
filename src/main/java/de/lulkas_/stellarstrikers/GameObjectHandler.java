@@ -1,5 +1,6 @@
 package de.lulkas_.stellarstrikers;
 
+import de.lulkas_.stellarstrikers.menu.display.IntDisplay;
 import de.lulkas_.stellarstrikers.playerData.*;
 import de.lulkas_.stellarstrikers.inputs.KeyboardInputs;
 import de.lulkas_.stellarstrikers.inputs.MouseInputs;
@@ -57,6 +58,7 @@ public class GameObjectHandler extends JPanel {
     public OptionsMenu optionsMenu;
     public PlayerOptionsHandler playerOptionsHandler;
     public PLayerLocalDataHandler playerLocalDataHandler;
+    public IntDisplay fpsDisplay;
 
     public GameObjectHandler(GameJoltAPI api) {
         this.api = api;
@@ -78,6 +80,13 @@ public class GameObjectHandler extends JPanel {
         this.playerLocalDataHandler = saveReader.getPlayerLocalDataHandler();
         this.musicHandler = new MusicHandler("/sounds/music.wav", 3000, -10f, this);
         musicHandler.start();
+        this.fpsDisplay = new IntDisplay(890, 870, () -> {
+            if(Main.gameLoop.window.eventListener != null) {
+                return Main.gameLoop.window.eventListener.getFps();
+            } else {
+                return 0;
+            }
+        }, 22, 55);
     }
 
     private void createMainMenuObjects() {

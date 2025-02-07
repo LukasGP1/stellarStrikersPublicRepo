@@ -411,7 +411,21 @@ public class UniformHandler {
             if(gameObjectHandler.skinMenu != null) {
                 return ((IntDisplay) gameObjectHandler.skinMenu.displayHandler.displays.get(0)).getMiscData();
             } else {
-                return List.of(0, 0, 0);
+                return List.of(0, 0);
+            }
+        }));
+        addUniform(new Uniform("fpsDisplayPosData", 4, () -> {
+            if(gameObjectHandler.fpsDisplay != null) {;
+                return gameObjectHandler.fpsDisplay.getPosData();
+            } else {
+                return List.of(0f, 0f, 0f, 0f, 0f);
+            }
+        }));
+        addUniform(new Uniform("fpsDisplayMiscData", 1, () -> {
+            if(gameObjectHandler.fpsDisplay != null) {
+                return gameObjectHandler.fpsDisplay.getMiscData();
+            } else {
+                return List.of(0, 0);
             }
         }));
     }

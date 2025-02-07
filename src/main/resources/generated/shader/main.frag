@@ -58,7 +58,7 @@ vec4 getSkinMenuExclamationMarkColor(in vec2 texCoord) {
 
         if(exclamationMarkTexCoord.x <= 1. && exclamationMarkTexCoord.x >= 0. && exclamationMarkTexCoord.y <= 1. && exclamationMarkTexCoord.y >= 0.) {
             vec4 exclamationMarkColor = vec4(0.);
-exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.467,0.0), vec2(0.005,0.005));
+exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.5206,0.0), vec2(0.005,0.005));
             return exclamationMarkColor;
         } else {
             return vec4(0.);
@@ -76,7 +76,7 @@ vec4 getSkillMenuExclamationMarkColor(in vec2 texCoord) {
 
         if(exclamationMarkTexCoord.x <= 1. && exclamationMarkTexCoord.x >= 0. && exclamationMarkTexCoord.y <= 1. && exclamationMarkTexCoord.y >= 0.) {
             vec4 exclamationMarkColor = vec4(0.);
-exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.467,0.0), vec2(0.005,0.005));
+exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.5206,0.0), vec2(0.005,0.005));
             return exclamationMarkColor;
         } else {
             return vec4(0.);
@@ -91,7 +91,7 @@ vec4 menuTextureColor(in vec2 texCoord) {
 
     switch(game_state) {
         case 3:
-color = textureFromAtlas(texCoord, vec2(0.602,0.0), vec2(0.16,0.09));
+color = textureFromAtlas(texCoord, vec2(0.7156,0.0), vec2(0.16,0.09));
         vec4 skinMenuExclamationMarkColor = getSkinMenuExclamationMarkColor(texCoord);
         if(skinMenuExclamationMarkColor.a != 0.) {
             color = skinMenuExclamationMarkColor;
@@ -102,25 +102,25 @@ color = textureFromAtlas(texCoord, vec2(0.602,0.0), vec2(0.16,0.09));
         }
         break;
         case 2:
-color = textureFromAtlas(texCoord, vec2(0.502,0.0), vec2(0.1,0.1));
+color = textureFromAtlas(texCoord, vec2(0.5556,0.0), vec2(0.16,0.09));
             break;
         case 11:
-color = textureFromAtlas(texCoord, vec2(0.0256,0.0), vec2(0.1,0.1));
+color = textureFromAtlas(texCoord, vec2(0.0192,0.0), vec2(0.16,0.09));
             break;
         case 16:
-color = textureFromAtlas(texCoord, vec2(0.762,0.0), vec2(0.1,0.1));
-            break;
-        case 10:
 color = textureFromAtlas(texCoord, vec2(0.0,0.1), vec2(0.16,0.09));
             break;
-        case 13:
+        case 10:
 color = textureFromAtlas(texCoord, vec2(0.16,0.1), vec2(0.16,0.09));
             break;
-        case 1:
+        case 13:
 color = textureFromAtlas(texCoord, vec2(0.32,0.1), vec2(0.16,0.09));
             break;
+        case 1:
+color = textureFromAtlas(texCoord, vec2(0.48,0.1), vec2(0.16,0.09));
+            break;
         case 0:
-color = textureFromAtlas(texCoord, vec2(0.2956,0.0), vec2(0.16,0.09));
+color = textureFromAtlas(texCoord, vec2(0.3492,0.0), vec2(0.16,0.09));
             break;
     }
 
@@ -144,61 +144,61 @@ vec4 getPlayerTextureColor(in vec2 playerTexCoord) {
             vec4 color = vec4(0.);
             switch(player_skin) {
                 case 1:
-color = textureFromAtlas(playerTexCoord, vec2(0.48,0.1), vec2(0.0032,0.0026));
+color = textureFromAtlas(playerTexCoord, vec2(0.64,0.1), vec2(0.0032,0.0026));
                     break;
                 case 2:
-color = textureFromAtlas(playerTexCoord, vec2(0.5204,0.1), vec2(0.0024,0.0022));
+color = textureFromAtlas(playerTexCoord, vec2(0.6804,0.1), vec2(0.0024,0.0022));
                     break;
                 case 3:
-color = textureFromAtlas(playerTexCoord, vec2(0.5228,0.1), vec2(0.0034,0.0027));
+color = textureFromAtlas(playerTexCoord, vec2(0.6828,0.1), vec2(0.0034,0.0027));
                     break;
                 case 4:
-color = textureFromAtlas(playerTexCoord, vec2(0.5262,0.1), vec2(0.0026,0.0023));
+color = textureFromAtlas(playerTexCoord, vec2(0.6862,0.1), vec2(0.0026,0.0023));
                     break;
                 case 5:
-color = textureFromAtlas(playerTexCoord, vec2(0.5288,0.1), vec2(0.0028,0.0022));
+color = textureFromAtlas(playerTexCoord, vec2(0.6888,0.1), vec2(0.0028,0.0022));
                     break;
                 case 6:
-color = textureFromAtlas(playerTexCoord, vec2(0.5316,0.1), vec2(0.004,0.0022));
+color = textureFromAtlas(playerTexCoord, vec2(0.6916,0.1), vec2(0.004,0.0022));
                     break;
                 case 7:
-color = textureFromAtlas(playerTexCoord, vec2(0.5356,0.1), vec2(0.004,0.002));
+color = textureFromAtlas(playerTexCoord, vec2(0.6956,0.1), vec2(0.004,0.002));
                     break;
                 case 8:
-color = textureFromAtlas(playerTexCoord, vec2(0.5396,0.1), vec2(0.0032,0.0022));
+color = textureFromAtlas(playerTexCoord, vec2(0.6996,0.1), vec2(0.0032,0.0022));
                     break;
                 case 9:
-color = textureFromAtlas(playerTexCoord, vec2(0.5428,0.1), vec2(0.0034,0.0029));
+color = textureFromAtlas(playerTexCoord, vec2(0.7028,0.1), vec2(0.0034,0.0029));
                     break;
                 case 10:
-color = textureFromAtlas(playerTexCoord, vec2(0.4832,0.1), vec2(0.004,0.0028));
+color = textureFromAtlas(playerTexCoord, vec2(0.6432,0.1), vec2(0.004,0.0028));
                     break;
                 case 11:
-color = textureFromAtlas(playerTexCoord, vec2(0.4872,0.1), vec2(0.0026,0.0022));
+color = textureFromAtlas(playerTexCoord, vec2(0.6472,0.1), vec2(0.0026,0.0022));
                     break;
                 case 12:
-color = textureFromAtlas(playerTexCoord, vec2(0.4898,0.1), vec2(0.0036,0.0032));
+color = textureFromAtlas(playerTexCoord, vec2(0.6498,0.1), vec2(0.0036,0.0032));
                     break;
                 case 13:
-color = textureFromAtlas(playerTexCoord, vec2(0.4934,0.1), vec2(0.0052,0.003));
+color = textureFromAtlas(playerTexCoord, vec2(0.6534,0.1), vec2(0.0052,0.003));
                     break;
                 case 14:
-color = textureFromAtlas(playerTexCoord, vec2(0.4986,0.1), vec2(0.0038,0.0025));
+color = textureFromAtlas(playerTexCoord, vec2(0.6586,0.1), vec2(0.0038,0.0025));
                     break;
                 case 15:
-color = textureFromAtlas(playerTexCoord, vec2(0.5024,0.1), vec2(0.0028,0.0023));
+color = textureFromAtlas(playerTexCoord, vec2(0.6624,0.1), vec2(0.0028,0.0023));
                     break;
                 case 16:
-color = textureFromAtlas(playerTexCoord, vec2(0.5052,0.1), vec2(0.0034,0.0024));
+color = textureFromAtlas(playerTexCoord, vec2(0.6652,0.1), vec2(0.0034,0.0024));
                     break;
                 case 17:
-color = textureFromAtlas(playerTexCoord, vec2(0.5086,0.1), vec2(0.0032,0.0027));
+color = textureFromAtlas(playerTexCoord, vec2(0.6686,0.1), vec2(0.0032,0.0027));
                     break;
                 case 18:
-color = textureFromAtlas(playerTexCoord, vec2(0.5118,0.1), vec2(0.0042,0.0027));
+color = textureFromAtlas(playerTexCoord, vec2(0.6718,0.1), vec2(0.0042,0.0027));
                     break;
                 case 19:
-color = textureFromAtlas(playerTexCoord, vec2(0.516,0.1), vec2(0.0044,0.0036));
+color = textureFromAtlas(playerTexCoord, vec2(0.676,0.1), vec2(0.0044,0.0036));
                     break;
             }
             return color;
@@ -279,43 +279,43 @@ vec4 getPowerUpColor(in vec2 texCoord) {
 
         if(powerUpTexCoord0.x >= 0. && powerUpTexCoord0.x <= 1. && powerUpTexCoord0.y >= 0. && powerUpTexCoord0.y <= 1.) {
             if(powerUpData0.w == 0) {
-powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.5462,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.7062,0.1), vec2(0.005,0.005));
             } else if(powerUpData0.w == .5) {
-powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.5562,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.7162,0.1), vec2(0.005,0.005));
             } else if(powerUpData0.w == 1.) {
-powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.5512,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord0, vec2(0.7112,0.1), vec2(0.005,0.005));
             }
         } else if(powerUpTexCoord1.x >= 0. && powerUpTexCoord1.x <= 1. && powerUpTexCoord1.y >= 0. && powerUpTexCoord1.y <= 1.) {
             if(powerUpData1.w == 0) {
-powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.5462,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.7062,0.1), vec2(0.005,0.005));
             } else if(powerUpData1.w == .5) {
-powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.5562,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.7162,0.1), vec2(0.005,0.005));
             } else if(powerUpData1.w == 1.) {
-powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.5512,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord1, vec2(0.7112,0.1), vec2(0.005,0.005));
             }
         } else if(powerUpTexCoord2.x >= 0. && powerUpTexCoord2.x <= 1. && powerUpTexCoord2.y >= 0. && powerUpTexCoord2.y <= 1.) {
             if(powerUpData2.w == 0) {
-powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.5462,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.7062,0.1), vec2(0.005,0.005));
             } else if(powerUpData2.w == .5) {
-powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.5562,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.7162,0.1), vec2(0.005,0.005));
             } else if(powerUpData2.w == 1.) {
-powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.5512,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord2, vec2(0.7112,0.1), vec2(0.005,0.005));
             }
         } else if(powerUpTexCoord3.x >= 0. && powerUpTexCoord3.x <= 1. && powerUpTexCoord3.y >= 0. && powerUpTexCoord3.y <= 1.) {
             if(powerUpData3.w == 0) {
-powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.5462,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.7062,0.1), vec2(0.005,0.005));
             } else if(powerUpData3.w == .5) {
-powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.5562,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.7162,0.1), vec2(0.005,0.005));
             } else if(powerUpData3.w == 1.) {
-powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.5512,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord3, vec2(0.7112,0.1), vec2(0.005,0.005));
             }
         } else if(powerUpTexCoord4.x >= 0. && powerUpTexCoord4.x <= 1. && powerUpTexCoord4.y >= 0. && powerUpTexCoord4.y <= 1.) {
             if(powerUpData4.w == 0) {
-powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.5462,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.7062,0.1), vec2(0.005,0.005));
             } else if(powerUpData4.w == .5) {
-powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.5562,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.7162,0.1), vec2(0.005,0.005));
             } else if(powerUpData4.w == 1.) {
-powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.5512,0.1), vec2(0.005,0.005));
+powerUpColor = textureFromAtlas(powerUpTexCoord4, vec2(0.7112,0.1), vec2(0.005,0.005));
             }
         }
 
@@ -489,67 +489,67 @@ vec4 getSkinDisplayTextureColor(in vec2 texCoord) {
         vec4 skinDisplayColor = vec4(0.);
         switch(skinDisplayMiscData.x) {
             case 1:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.48,0.1), vec2(0.0032,0.0026));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.64,0.1), vec2(0.0032,0.0026));
             break;
             case 2:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5204,0.1), vec2(0.0024,0.0022));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6804,0.1), vec2(0.0024,0.0022));
             break;
             case 3:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5228,0.1), vec2(0.0034,0.0027));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6828,0.1), vec2(0.0034,0.0027));
             break;
             case 4:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5262,0.1), vec2(0.0026,0.0023));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6862,0.1), vec2(0.0026,0.0023));
             break;
             case 5:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5288,0.1), vec2(0.0028,0.0022));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6888,0.1), vec2(0.0028,0.0022));
             break;
             case 6:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5316,0.1), vec2(0.004,0.0022));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6916,0.1), vec2(0.004,0.0022));
             break;
             case 7:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5356,0.1), vec2(0.004,0.002));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6956,0.1), vec2(0.004,0.002));
             break;
             case 8:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5396,0.1), vec2(0.0032,0.0022));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6996,0.1), vec2(0.0032,0.0022));
             break;
             case 9:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5428,0.1), vec2(0.0034,0.0029));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.7028,0.1), vec2(0.0034,0.0029));
             break;
             case 10:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4832,0.1), vec2(0.004,0.0028));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6432,0.1), vec2(0.004,0.0028));
             break;
             case 11:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4872,0.1), vec2(0.0026,0.0022));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6472,0.1), vec2(0.0026,0.0022));
             break;
             case 12:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4898,0.1), vec2(0.0036,0.0032));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6498,0.1), vec2(0.0036,0.0032));
             break;
             case 13:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4934,0.1), vec2(0.0052,0.003));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6534,0.1), vec2(0.0052,0.003));
             break;
             case 14:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4986,0.1), vec2(0.0038,0.0025));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6586,0.1), vec2(0.0038,0.0025));
             break;
             case 15:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5024,0.1), vec2(0.0028,0.0023));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6624,0.1), vec2(0.0028,0.0023));
             break;
             case 16:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5052,0.1), vec2(0.0034,0.0024));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6652,0.1), vec2(0.0034,0.0024));
             break;
             case 17:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5086,0.1), vec2(0.0032,0.0027));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6686,0.1), vec2(0.0032,0.0027));
             break;
             case 18:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5118,0.1), vec2(0.0042,0.0027));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.6718,0.1), vec2(0.0042,0.0027));
             break;
             case 19:
-skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.516,0.1), vec2(0.0044,0.0036));
+skinDisplayColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.676,0.1), vec2(0.0044,0.0036));
             break;
 
         }
         if(skinDisplayMiscData.y == 1.) {
             vec4 lockColor = vec4(0.);
-lockColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.4606,0.0), vec2(0.0064,0.0052));
+lockColor = textureFromAtlas(skinDisplayTexCoord, vec2(0.5142,0.0), vec2(0.0064,0.0052));
             if(lockColor.a != 0.) {
                 skinDisplayColor = lockColor;
             }
@@ -568,7 +568,7 @@ vec4 getSkinExclamationMarkColor(in vec2 texCoord) {
 
         if(exclamationMarkTexCoord.x <= 1. && exclamationMarkTexCoord.x >= 0. && exclamationMarkTexCoord.y <= 1. && exclamationMarkTexCoord.y >= 0.) {
             vec4 exclamationMarkColor = vec4(0.);
-exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.467,0.0), vec2(0.005,0.005));
+exclamationMarkColor = textureFromAtlas(exclamationMarkTexCoord, vec2(0.5206,0.0), vec2(0.005,0.005));
             return exclamationMarkColor;
         } else {
             return vec4(0.);
@@ -809,9 +809,9 @@ vec4 getButtonColor(in vec2 texCoord) {
         if(switchButtonTexCoord0.x <= 1. && switchButtonTexCoord0.x >= 0. && switchButtonTexCoord0.x <= 1. && switchButtonTexCoord0.x >= 0.) {
             vec4 switchButtonColor0 = vec4(0.);
             if(switchButtonMisc0 == 1) {
-switchButtonColor0 = textureFromAtlas(switchButtonTexCoord0, vec2(0.487,0.0), vec2(0.015,0.005));
+switchButtonColor0 = textureFromAtlas(switchButtonTexCoord0, vec2(0.5406,0.0), vec2(0.015,0.005));
             } else {
-switchButtonColor0 = textureFromAtlas(switchButtonTexCoord0, vec2(0.472,0.0), vec2(0.015,0.005));
+switchButtonColor0 = textureFromAtlas(switchButtonTexCoord0, vec2(0.5256,0.0), vec2(0.015,0.005));
             }
             if(switchButtonColor0.a != 0.) {
                 buttonColor = switchButtonColor0;
@@ -824,9 +824,9 @@ switchButtonColor0 = textureFromAtlas(switchButtonTexCoord0, vec2(0.472,0.0), ve
         if(switchButtonTexCoord1.x <= 1. && switchButtonTexCoord1.x >= 0. && switchButtonTexCoord1.x <= 1. && switchButtonTexCoord1.x >= 0.) {
             vec4 switchButtonColor1 = vec4(0.);
             if(switchButtonMisc1 == 1) {
-switchButtonColor1 = textureFromAtlas(switchButtonTexCoord1, vec2(0.487,0.0), vec2(0.015,0.005));
+switchButtonColor1 = textureFromAtlas(switchButtonTexCoord1, vec2(0.5406,0.0), vec2(0.015,0.005));
             } else {
-switchButtonColor1 = textureFromAtlas(switchButtonTexCoord1, vec2(0.472,0.0), vec2(0.015,0.005));
+switchButtonColor1 = textureFromAtlas(switchButtonTexCoord1, vec2(0.5256,0.0), vec2(0.015,0.005));
             }
             if(switchButtonColor1.a != 0.) {
                 buttonColor = switchButtonColor1;
@@ -862,6 +862,8 @@ uniform vec4 gameWaveDisplayPosData;
 uniform int gameWaveDisplayMiscData;
 uniform vec4 skinReqDisplayPosData;
 uniform int skinReqDisplayMiscData;
+uniform vec4 fpsDisplayPosData;
+uniform int fpsDisplayMiscData;
 
 int getDigitCount(in int n) {
     if (n == 0) {
@@ -895,34 +897,34 @@ vec4 getDigitColor(in vec2 texCoord, int digit) {
         vec4 digitColor = vec4(0.);
         switch(digit) {
             case 0:
-digitColor = textureFromAtlas(texCoord, vec2(0.1256,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.1792,0.0), vec2(0.007,0.01));
             break;
             case 1:
-digitColor = textureFromAtlas(texCoord, vec2(0.1326,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.1862,0.0), vec2(0.007,0.01));
             break;
             case 2:
-digitColor = textureFromAtlas(texCoord, vec2(0.1396,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.1932,0.0), vec2(0.007,0.01));
             break;
             case 3:
-digitColor = textureFromAtlas(texCoord, vec2(0.1466,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2002,0.0), vec2(0.007,0.01));
             break;
             case 4:
-digitColor = textureFromAtlas(texCoord, vec2(0.1536,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2072,0.0), vec2(0.007,0.01));
             break;
             case 5:
-digitColor = textureFromAtlas(texCoord, vec2(0.1606,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2142,0.0), vec2(0.007,0.01));
             break;
             case 6:
-digitColor = textureFromAtlas(texCoord, vec2(0.1676,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2212,0.0), vec2(0.007,0.01));
             break;
             case 7:
-digitColor = textureFromAtlas(texCoord, vec2(0.1746,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2282,0.0), vec2(0.007,0.01));
             break;
             case 8:
-digitColor = textureFromAtlas(texCoord, vec2(0.1816,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2352,0.0), vec2(0.007,0.01));
             break;
             case 9:
-digitColor = textureFromAtlas(texCoord, vec2(0.1886,0.0), vec2(0.007,0.01));
+digitColor = textureFromAtlas(texCoord, vec2(0.2422,0.0), vec2(0.007,0.01));
         }
         return digitColor;
     }
@@ -959,16 +961,24 @@ vec4 getIntDisplayColor(in int miscData, vec2 texCoord, vec4 posData) {
 }
 
 vec4 getDisplayColor(in vec2 texCoord) {
+    vec4 color = vec4(0.);
+
+    vec4 fpsDisplayColor = getIntDisplayColor(fpsDisplayMiscData, texCoord, fpsDisplayPosData);
+    if(fpsDisplayColor.a != 0.) {
+        return fpsDisplayColor;
+    }
+
     if(game_state == 10) {
-        vec4 color = vec4(0.);
         if(skillMenuDisplayMisc == 1.) {
             vec2 skillMenuDisplayTexCoord = texCoord;
             skillMenuDisplayTexCoord -= skillMenuDisplayPos.xy;
             skillMenuDisplayTexCoord *= 1. / skillMenuDisplayPos.zw;
             if(skillMenuDisplayTexCoord.x <= 1. && skillMenuDisplayTexCoord.x >= 0. && skillMenuDisplayTexCoord.y <= 1. && skillMenuDisplayTexCoord.y >= 0.) {
                 vec4 skillMenuDisplayColor = vec4(0.);
-skillMenuDisplayColor = textureFromAtlas(skillMenuDisplayTexCoord, vec2(0.1956,0.0), vec2(0.1,0.01));
-                color = skillMenuDisplayColor;
+skillMenuDisplayColor = textureFromAtlas(skillMenuDisplayTexCoord, vec2(0.2492,0.0), vec2(0.1,0.01));
+                if(skillMenuDisplayColor.a != 0.) {
+                    color = skillMenuDisplayColor;
+                }
             }
         }
 
@@ -976,11 +986,7 @@ skillMenuDisplayColor = textureFromAtlas(skillMenuDisplayTexCoord, vec2(0.1956,0
         if(levelPointDisplayColor.a != 0.) {
             color = levelPointDisplayColor;
         }
-
-        return color;
     } else if(game_state == 0) {
-        vec4 color = vec4(0.);
-
         vec2 healthDisplayTexCoord = texCoord;
         healthDisplayTexCoord -= healthDisplayPosData.xy;
         healthDisplayTexCoord *= 1. / healthDisplayPosData.zw;
@@ -988,14 +994,16 @@ skillMenuDisplayColor = textureFromAtlas(skillMenuDisplayTexCoord, vec2(0.1956,0
         for(int i = 0; i < healthDisplayMiscData; i++) {
             if(healthDisplayTexCoord.x <= 1. && healthDisplayTexCoord.x >= 0. && healthDisplayTexCoord.y <= 1. && healthDisplayTexCoord.y >= 0.) {
                 vec4 heartColor = vec4(0.);
-heartColor = textureFromAtlas(healthDisplayTexCoord, vec2(0.4556,0.0), vec2(0.005,0.005));
+heartColor = textureFromAtlas(healthDisplayTexCoord, vec2(0.5092,0.0), vec2(0.005,0.005));
                 if(heartColor.a != 0.) {
                     healthDisplayColor = heartColor;
                 }
             }
             healthDisplayTexCoord.x -= 1.;
         }
-        color = healthDisplayColor;
+        if(healthDisplayColor.a != 0.) {
+            color = healthDisplayColor;
+        }
 
         vec4 scoreDisplayColor = getIntDisplayColor(gameScoreDisplayMiscData, texCoord, gameScoreDisplayPosData);
         if(scoreDisplayColor.a != 0.) {
@@ -1006,13 +1014,11 @@ heartColor = textureFromAtlas(healthDisplayTexCoord, vec2(0.4556,0.0), vec2(0.00
         if(waveDisplayColor.a != 0.) {
             color = waveDisplayColor;
         }
-
-        return color;
     } else if(game_state == 3) {
-        vec4 color = vec4(0.);
-
         vec4 scoreDisplayColor = getIntDisplayColor(scoreDisplayMiscData, texCoord, scoreDisplayPosData);
-        color = scoreDisplayColor;
+        if(scoreDisplayColor.a != 0.) {
+            color = scoreDisplayColor;
+        }
 
         vec4 levelCostDisplayColor = getIntDisplayColor(levelCostDisplayMiscData, texCoord, levelCostDisplayPosData);
         if(levelCostDisplayColor.a != 0.) {
@@ -1028,25 +1034,24 @@ heartColor = textureFromAtlas(healthDisplayTexCoord, vec2(0.4556,0.0), vec2(0.00
         if(waveDisplayColor.a != 0.) {
             color = waveDisplayColor;
         }
-
-        return color;
     } else if(game_state == 1) {
-        vec4 color = vec4(0.);
-
         vec4 scoreDisplayColor = getIntDisplayColor(wonScoreDisplayMiscData, texCoord, wonScoreDisplayPosData);
-        color = scoreDisplayColor;
+        if(scoreDisplayColor.a != 0.) {
+            color = scoreDisplayColor;
+        }
 
         vec4 timeDisplayColor = getIntDisplayColor(wonTimeDisplayMiscData, texCoord, wonTimeDisplayPosData);
         if(timeDisplayColor.a != 0.) {
             color = timeDisplayColor;
         }
-
-        return color;
     } else if(game_state == 13) {
-        return getIntDisplayColor(skinReqDisplayMiscData, texCoord, skinReqDisplayPosData);
-    } else {
-        return vec4(0.);
+        vec4 skinReqDisplayColor = getIntDisplayColor(skinReqDisplayMiscData, texCoord, skinReqDisplayPosData);
+        if(skinReqDisplayColor.a != 0.) {
+            color = skinReqDisplayColor;
+        }
     }
+
+    return color;
 }
 
 void main() {

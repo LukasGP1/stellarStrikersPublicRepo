@@ -15,17 +15,18 @@ import java.nio.FloatBuffer;
 public class EventListener implements GLEventListener {
     private final GameObjectHandler gameObjectHandler;
     private boolean initialized = false;
-
     private int shaderProgram;
     private int[] vao;
     private int[] vbo;
     private float[] vertices = new float[]{
-            //coordinates
             1f,  1f, 0f,
             1f, -1f, 0f,
             -1f, -1f, 0f,
             -1f,  1f, 0f,
     };
+    private long lastPrint = -1;
+    private int frames = 0;
+    private int fps = 0;
 
     @Override
     public void init(GLAutoDrawable drawable) {
@@ -75,6 +76,19 @@ public class EventListener implements GLEventListener {
             gl.glUseProgram(shaderProgram);
             UniformHandler.setUniforms(gl, shaderProgram);
             gl.glDrawArrays(GL2.GL_QUADS, 0, 4);
+
+            if(lastPrint == -1) {
+                lastPrint = System.nanoTime();
+            } else {
+                long now = System.nanoTime();
+                long elapsed = now - lastPrint;
+                frames++;
+                if(elapsed >= 500_000_000L) {
+                    fps = ((int) (frames / (elapsed / 1_000_000_000.0)));
+                    frames = 0;
+                    lastPrint = now;
+                }
+            }
         }
     }
 
@@ -92,5 +106,7 @@ public class EventListener implements GLEventListener {
         this.gameObjectHandler = gameObjectHandler;
     }
 
-
+    public int getFps() {
+        return fps;
+    }
 }

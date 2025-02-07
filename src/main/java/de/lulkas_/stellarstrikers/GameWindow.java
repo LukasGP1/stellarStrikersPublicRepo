@@ -4,7 +4,6 @@ import com.jogamp.opengl.GLCapabilities;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.awt.GLJPanel;
 import com.jogamp.opengl.util.Animator;
-import com.jogamp.opengl.util.FPSAnimator;
 import de.lulkas_.stellarstrikers.rendering.shader.EventListener;
 import org.gamejolt.GameJoltAPI;
 
@@ -16,7 +15,8 @@ public class GameWindow extends JFrame {
     public GLJPanel shaderPanel;
     public Dimension size;
     public GLProfile profile;
-    public final int FPS_START = 120;
+    public Animator animator;
+    public EventListener eventListener;
 
     public GameWindow(GameJoltAPI api) {
         GLProfile.initSingleton();
@@ -30,7 +30,8 @@ public class GameWindow extends JFrame {
         gameObjectHandler.requestFocusInWindow();
 
         shaderPanel = new GLJPanel(capabilities);
-        shaderPanel.addGLEventListener(new EventListener(gameObjectHandler));
+        eventListener = new EventListener(gameObjectHandler);
+        shaderPanel.addGLEventListener(eventListener);
 
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setLayout(null);
@@ -45,7 +46,7 @@ public class GameWindow extends JFrame {
         this.setTitle("Stellar Strikers");
         this.setIconImage(Main.icon);
 
-        Animator animator = new Animator(shaderPanel);
+        animator = new Animator(shaderPanel);
         animator.start();
 
         this.setVisible(true);
