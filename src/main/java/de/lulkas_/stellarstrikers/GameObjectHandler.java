@@ -4,7 +4,7 @@ import de.lulkas_.stellarstrikers.menu.display.IntDisplay;
 import de.lulkas_.stellarstrikers.playerData.*;
 import de.lulkas_.stellarstrikers.inputs.KeyboardInputs;
 import de.lulkas_.stellarstrikers.inputs.MouseInputs;
-import de.lulkas_.stellarstrikers.level.enemys.EnemyWaveHandler;
+import de.lulkas_.stellarstrikers.level.enemys.EnemyHandler;
 import de.lulkas_.stellarstrikers.level.player.Player;
 import de.lulkas_.stellarstrikers.level.powerUp.PowerUpHandler;
 import de.lulkas_.stellarstrikers.level.time.GameTimer;
@@ -34,7 +34,7 @@ public class GameObjectHandler extends JPanel {
     private final KeyboardInputs keyboardInputs;
     public Player player;
     public GameState gameState = GameState.FIRST_ENTER_MAIN_MENU;
-    public EnemyWaveHandler enemyWaveHandler;
+    public EnemyHandler enemyHandler;
     public MainMenu mainMenu;
     public GameMenu gameMenu;
     public WonMenu wonMenu;
@@ -96,7 +96,7 @@ public class GameObjectHandler extends JPanel {
 
     private void createWonMenuObjects() {
         this.wonMenu = new WonMenu(this);
-        this.playerAttributeHandler.score += enemyWaveHandler.getSingleGameScore();
+        this.playerAttributeHandler.score += enemyHandler.getSingleGameScore();
         this.playerStatisticsHandler.winGame();
         SoundHandler.playSound("/sounds/menu/win.wav", -5f, this);
     }
@@ -124,8 +124,8 @@ public class GameObjectHandler extends JPanel {
     }
 
     private void createGameObjects() {
-        this.player = new Player(3.0f, this, 468, 750, false, playerSkillHandler, playerAttributeHandler.getSkinDisplayed());
-        this.enemyWaveHandler = new EnemyWaveHandler(0, this, player, playerAttributeHandler.getLevel() + 2);
+        this.player = new Player(.2f, this, 468, 750, false, playerSkillHandler);
+        this.enemyHandler = new EnemyHandler(0, this, player, playerAttributeHandler.getLevel() + 2);
         this.gameMenu = new GameMenu(this);
         this.gameMenu.tick();
         this.powerUpHandler = new PowerUpHandler(this);
@@ -227,7 +227,7 @@ public class GameObjectHandler extends JPanel {
 
         if(gameState == GameState.PLAYING) {
             player.tick();
-            enemyWaveHandler.tick();
+            enemyHandler.tick();
             powerUpHandler.tick();
             gameTimer.tick();
             gameMenu.tick();

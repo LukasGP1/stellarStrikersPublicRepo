@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class WaveSpawnHandler {
-    public static void spawnWave(int wave, GameObjectHandler gameObjectHandler, EnemyWaveHandler enemyWaveHandler) {
+    public static void spawnWave(int wave, GameObjectHandler gameObjectHandler, EnemyHandler enemyHandler) {
         List<Entity> enemies;
         try {
             enemies = readWave(wave, gameObjectHandler);
@@ -21,9 +21,9 @@ public class WaveSpawnHandler {
         }
         for(Entity entity : enemies) {
             if(entity instanceof Enemy) {
-                enemyWaveHandler.enemies.add(((Enemy) entity));
+                enemyHandler.enemies.add(((Enemy) entity));
             } else {
-                enemyWaveHandler.bosses.add(((Boss) entity));
+                enemyHandler.bosses.add(((Boss) entity));
             }
         }
     }
@@ -122,7 +122,7 @@ public class WaveSpawnHandler {
                 type = Boss.BossType.GUNNER;
             }
 
-            toReturn.add(new Boss(400, 300, (wave / 5) * 25, 3.0f, gameObjectHandler, type));
+            toReturn.add(new Boss(400, 300, (wave / 5) * 25, .1f, gameObjectHandler, type));
         } else {
             Enemy.EnemyType type1 = Enemy.EnemyType.NORMAL;
             Enemy.EnemyType type2 = Enemy.EnemyType.NORMAL;
@@ -132,11 +132,11 @@ public class WaveSpawnHandler {
             if(wave > 10) {
                 type1 = Enemy.EnemyType.GUNNER;
             }
-            toReturn.add(new Enemy(200, 400, 0.1f, 2 + wave - 3, gameObjectHandler, type1));
-            toReturn.add(new Enemy(420, 400, 0.1f, 3 + wave - 3, gameObjectHandler, type1));
-            toReturn.add(new Enemy(630, 400, 0.1f, 2 + wave - 3, gameObjectHandler, type1));
-            toReturn.add(new Enemy(520, 200, 0.1f, 1 + wave - 3, gameObjectHandler, type2));
-            toReturn.add(new Enemy(310, 200, 0.1f, 1 + wave - 3, gameObjectHandler, type2));
+            toReturn.add(new Enemy(200, 400, 0.01f, 2 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(420, 400, 0.01f, 3 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(630, 400, 0.01f, 2 + wave - 3, gameObjectHandler, type1));
+            toReturn.add(new Enemy(520, 200, 0.01f, 1 + wave - 3, gameObjectHandler, type2));
+            toReturn.add(new Enemy(310, 200, 0.01f, 1 + wave - 3, gameObjectHandler, type2));
         }
 
         return toReturn;

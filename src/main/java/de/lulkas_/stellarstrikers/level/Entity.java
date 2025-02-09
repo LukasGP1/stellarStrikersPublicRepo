@@ -43,15 +43,15 @@ public abstract class Entity {
         if(this.health <= 0) {
             this.dead = true;
             if(this instanceof Enemy) {
-                gameObjectHandler.enemyWaveHandler.score(gameObjectHandler.playerSkillHandler.getIncome());
+                gameObjectHandler.enemyHandler.score(gameObjectHandler.playerSkillHandler.getIncome());
                 gameObjectHandler.playerStatisticsHandler.killEnemy();
-                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyWaveHandler.wave);
+                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyHandler.wave);
             }
 
             if(this instanceof Boss) {
-                gameObjectHandler.enemyWaveHandler.score(gameObjectHandler.playerSkillHandler.getIncome() + 4);
+                gameObjectHandler.enemyHandler.score(gameObjectHandler.playerSkillHandler.getIncome() + 4);
                 gameObjectHandler.playerStatisticsHandler.killBoss();
-                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyWaveHandler.wave);
+                gameObjectHandler.powerUpHandler.killedEnemy(gameObjectHandler.enemyHandler.wave);
             }
         }
         this.collideWith = getCollideWith();

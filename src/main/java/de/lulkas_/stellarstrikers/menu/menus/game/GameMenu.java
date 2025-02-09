@@ -11,6 +11,6 @@ public class GameMenu extends Menu {
 
     @Override
     protected DisplayHandler createDisplayHandler() {
-        return new GameDisplayHandler(gameObjectHandler.player, gameObjectHandler.enemyWaveHandler);
+        return new GameDisplayHandler(gameObjectHandler.player, gameObjectHandler.enemyHandler);
     }
 }

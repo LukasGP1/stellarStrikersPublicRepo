@@ -43,7 +43,7 @@ public class Bullet extends Entity {
         if(firedBy instanceof Enemy) {
             toReturn.add(gameObjectHandler.player);
         } else {
-            toReturn.addAll(gameObjectHandler.enemyWaveHandler.enemies);
+            toReturn.addAll(gameObjectHandler.enemyHandler.enemies);
         }
         return toReturn;
     }

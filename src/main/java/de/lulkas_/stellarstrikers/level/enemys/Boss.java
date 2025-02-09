@@ -2,6 +2,7 @@ package de.lulkas_.stellarstrikers.level.enemys;
 
 import de.lulkas_.stellarstrikers.GameObjectHandler;
 import de.lulkas_.stellarstrikers.level.Entity;
+import de.lulkas_.stellarstrikers.level.MovingEntity;
 import de.lulkas_.stellarstrikers.level.projectile.Bomb;
 import de.lulkas_.stellarstrikers.sound.SoundHandler;
 import de.lulkas_.stellarstrikers.util.Random;
@@ -9,20 +10,17 @@ import de.lulkas_.stellarstrikers.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Boss extends Entity {
+public class Boss extends MovingEntity {
     public List<Bomb> bombs = new ArrayList<>();
     private int bombCooldown;
-    private final float startX;
-    private final float speed;
-    private Enemy.MovementState movementState = Enemy.MovementState.LEFT;
+    private final float SPEED;
     private final GameObjectHandler gameObjectHandler;
     private final BossType type;
 
-    public Boss(float startX, float startY, int health, float speed, GameObjectHandler gameObjectHandler, BossType type) {
-        super(159, 234, startX, startY, health, gameObjectHandler);
-        this.startX = startX;
+    public Boss(float startX, float startY, int health, float SPEED, GameObjectHandler gameObjectHandler, BossType type) {
+        super(159, 234, startX, startY, health, gameObjectHandler, .95f, 9);
         this.gameObjectHandler = gameObjectHandler;
-        this.speed = speed;
+        this.SPEED = SPEED;
         this.type = type;
         this.bombCooldown = type.bombCooldown;
     }
@@ -34,7 +32,7 @@ public class Boss extends Entity {
 
         if(this.bombCooldown <= 0) {
             shoot();
-            this.bombCooldown = Random.randomInt(type.bombCooldown + 100, type.bombCooldown - 100);
+            this.bombCooldown = type.bombCooldown;
         } else {
             bombCooldown--;
         }
@@ -76,20 +74,11 @@ public class Boss extends Entity {
     }
 
     private void updateMovement() {
-        if(this.movementState == Enemy.MovementState.LEFT) {
-            if(Math.abs(this.gameX - this.startX) < 300) {
-                this.gameX -= this.speed;
-            } else {
-                this.movementState = Enemy.MovementState.RIGHT;
-                this.gameX += this.speed;
-            }
-        } else {
-            if(Math.abs(this.gameX - this.startX) < 300) {
-                this.gameX += this.speed;
-            } else {
-                this.movementState = Enemy.MovementState.LEFT;
-                this.gameX -= this.speed;
-            }
+        float playerX = gameObjectHandler.player.getGameX();
+        if(this.gameX - playerX > 10f) {
+            this.velocities[0] -= this.SPEED;
+        } else if(this.gameX - playerX < -10f) {
+            this.velocities[0] += this.SPEED;
         }
     }
 
@@ -127,9 +116,9 @@ public class Boss extends Entity {
     }
 
     public enum BossType {
-        NORMAL("/assets/textures/enemy/enemy.png", false, 1.0f, 150, 0f),
-        SNIPER("/assets/textures/enemy/sniper.png", true, 1.0f, 250, 0.5f),
-        GUNNER("/assets/textures/enemy/gunner.png", false, 1.0f, 100, 1f);
+        NORMAL("/assets/textures/enemy/enemy.png", false, 1.0f, 250, 0f),
+        SNIPER("/assets/textures/enemy/sniper.png", true, 1.0f, 350, 0.5f),
+        GUNNER("/assets/textures/enemy/gunner.png", false, 1.0f, 200, 1f);
 
         public final String texture;
         public final boolean aims;

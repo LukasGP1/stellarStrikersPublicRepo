@@ -34,7 +34,7 @@ public class PowerUpHandler {
                 if(Random.randomChance(0.9f)) {
                     powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, wave, PowerUp.PowerUpType.INCOME, 1500));
                 } else {
-                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, 25, PowerUp.PowerUpType.SHOOTING_SPEED, 1500));
+                    powerUps.add(new PowerUp(Random.randomInt(900, 0), 0, gameObjectHandler, 10, PowerUp.PowerUpType.SHOOTING_SPEED, 1500));
                 }
             }
         }

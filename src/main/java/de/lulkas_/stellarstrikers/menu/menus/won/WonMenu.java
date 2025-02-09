@@ -15,7 +15,7 @@ public class WonMenu extends Menu {
 
     @Override
     protected DisplayHandler createDisplayHandler() {
-        return new WonDisplayHandler(gameObjectHandler.gameTimer, gameObjectHandler.enemyWaveHandler);
+        return new WonDisplayHandler(gameObjectHandler.gameTimer, gameObjectHandler.enemyHandler);
     }
 
     @Override

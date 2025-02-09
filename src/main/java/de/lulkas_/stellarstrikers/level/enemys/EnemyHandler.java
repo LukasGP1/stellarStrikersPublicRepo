@@ -6,7 +6,7 @@ import de.lulkas_.stellarstrikers.level.player.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnemyWaveHandler {
+public class EnemyHandler {
     public Integer wave = 0;
     public WaveState waveState = WaveState.DEFEATED;
     public List<Enemy> enemies = new ArrayList<>();
@@ -72,7 +72,7 @@ public class EnemyWaveHandler {
         }
     }
 
-    public EnemyWaveHandler(int startScore, GameObjectHandler gameObjectHandler, Player player, int waves) {
+    public EnemyHandler(int startScore, GameObjectHandler gameObjectHandler, Player player, int waves) {
         this.singleGameScore = startScore;
         this.gameObjectHandler = gameObjectHandler;
         this.player = player;
@@ -103,14 +103,14 @@ public class EnemyWaveHandler {
     public int getDisplayBossTicks() {
         if(gameObjectHandler.gameState == GameObjectHandler.GameState.PLAYING) {
             if(((int) (this.wave / 5)) * 5 == this.wave) {
-                if(this.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
+                if(this.waveState == EnemyHandler.WaveState.SPAWNING) {
                     return this.spawningTicks;
                 } else {
                     return 0;
                 }
             } else if (((int) ((this.wave - 1) / 5)) * 5 == this.wave - 1 && this.wave != 1) {
-                if(this.waveState == EnemyWaveHandler.WaveState.SPAWNING) {
-                    return 120 - gameObjectHandler.enemyWaveHandler.spawningTicks;
+                if(this.waveState == EnemyHandler.WaveState.SPAWNING) {
+                    return 120 - gameObjectHandler.enemyHandler.spawningTicks;
                 } else {
                     return 120;
                 }

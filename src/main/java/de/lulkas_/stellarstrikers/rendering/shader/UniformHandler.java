@@ -59,10 +59,10 @@ public class UniformHandler {
 
         addUniform(new Uniform("time", 1, () -> List.of(0f, (((int) (System.currentTimeMillis() - startTime))) / 1000f)));
         addUniform(new Uniform("boss_ticks", 1, () -> {
-            if(gameObjectHandler.enemyWaveHandler == null) {
+            if(gameObjectHandler.enemyHandler == null) {
                 return List.of(0, 120);
             } else {
-                return List.of(0, gameObjectHandler.enemyWaveHandler.getDisplayBossTicks());
+                return List.of(0, gameObjectHandler.enemyHandler.getDisplayBossTicks());
             }
         }));
         addUniform(new Uniform("game_state", 1, () -> switch (gameObjectHandler.gameState) {
@@ -112,9 +112,9 @@ public class UniformHandler {
         addUniform(new Uniform("powerUpData3", 4, getPowerUpDataSupplier(3)));
         addUniform(new Uniform("powerUpData4", 4, getPowerUpDataSupplier(4)));
         addUniform(new Uniform("bossPosData", 4, () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(!gameObjectHandler.enemyWaveHandler.bosses.isEmpty()) {
-                    return gameObjectHandler.enemyWaveHandler.bosses.get(0).getPosData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(!gameObjectHandler.enemyHandler.bosses.isEmpty()) {
+                    return gameObjectHandler.enemyHandler.bosses.get(0).getPosData();
                 } else {
                     return List.of(0f, 0f, 0f, 0f, 0f);
                 }
@@ -123,9 +123,9 @@ public class UniformHandler {
             }
         }));
         addUniform(new Uniform("bossMiscData", 2, () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(!gameObjectHandler.enemyWaveHandler.bosses.isEmpty()) {
-                    return gameObjectHandler.enemyWaveHandler.bosses.get(0).getMiscData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(!gameObjectHandler.enemyHandler.bosses.isEmpty()) {
+                    return gameObjectHandler.enemyHandler.bosses.get(0).getMiscData();
                 } else {
                     return List.of(0f, 0f, 0f);
                 }
@@ -446,10 +446,10 @@ public class UniformHandler {
 
     private static Supplier<List<?>> getEBulletSupplier(int index) {
         return () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(gameObjectHandler.enemyWaveHandler.enemies.size() > index) {
-                    if(!gameObjectHandler.enemyWaveHandler.enemies.get(index).bullets.isEmpty()) {
-                        return gameObjectHandler.enemyWaveHandler.enemies.get(index).bullets.get(0).getData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(gameObjectHandler.enemyHandler.enemies.size() > index) {
+                    if(!gameObjectHandler.enemyHandler.enemies.get(index).bullets.isEmpty()) {
+                        return gameObjectHandler.enemyHandler.enemies.get(index).bullets.get(0).getData();
                     } else {
                         return List.of(0f, 0f, 0f, 0f, 0f);
                     }
@@ -478,10 +478,10 @@ public class UniformHandler {
 
     private static Supplier<List<?>> getBombPosDataSupplier(int index) {
         return () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(!gameObjectHandler.enemyWaveHandler.bosses.isEmpty()) {
-                    if(gameObjectHandler.enemyWaveHandler.bosses.get(0).bombs.size() > index) {
-                        return gameObjectHandler.enemyWaveHandler.bosses.get(0).bombs.get(index).getPosData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(!gameObjectHandler.enemyHandler.bosses.isEmpty()) {
+                    if(gameObjectHandler.enemyHandler.bosses.get(0).bombs.size() > index) {
+                        return gameObjectHandler.enemyHandler.bosses.get(0).bombs.get(index).getPosData();
                     } else {
                         return List.of(0f, 0f, 0f, 0f, 0f);
                     }
@@ -496,10 +496,10 @@ public class UniformHandler {
 
     private static Supplier<List<?>> getBombMiscDataSupplier(int index) {
         return () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(!gameObjectHandler.enemyWaveHandler.bosses.isEmpty()) {
-                    if(gameObjectHandler.enemyWaveHandler.bosses.get(0).bombs.size() > index) {
-                        return gameObjectHandler.enemyWaveHandler.bosses.get(0).bombs.get(index).getMiscData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(!gameObjectHandler.enemyHandler.bosses.isEmpty()) {
+                    if(gameObjectHandler.enemyHandler.bosses.get(0).bombs.size() > index) {
+                        return gameObjectHandler.enemyHandler.bosses.get(0).bombs.get(index).getMiscData();
                     } else {
                         return List.of(0, 0);
                     }
@@ -514,9 +514,9 @@ public class UniformHandler {
 
     private static Supplier<List<?>> getEnemyPosDataSupplier(int index) {
         return () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(gameObjectHandler.enemyWaveHandler.enemies.size() > index) {
-                    return gameObjectHandler.enemyWaveHandler.enemies.get(index).getPosData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(gameObjectHandler.enemyHandler.enemies.size() > index) {
+                    return gameObjectHandler.enemyHandler.enemies.get(index).getPosData();
                 } else {
                     return List.of(0f, 0f, 0f, 0f, 0f);
                 }
@@ -528,9 +528,9 @@ public class UniformHandler {
 
     private static Supplier<List<?>> getEnemyMiscDataSupplier(int index) {
         return () -> {
-            if(gameObjectHandler.enemyWaveHandler != null) {
-                if(gameObjectHandler.enemyWaveHandler.enemies.size() > index) {
-                    return gameObjectHandler.enemyWaveHandler.enemies.get(index).getMiscData();
+            if(gameObjectHandler.enemyHandler != null) {
+                if(gameObjectHandler.enemyHandler.enemies.size() > index) {
+                    return gameObjectHandler.enemyHandler.enemies.get(index).getMiscData();
                 } else {
                     return List.of(0, 0, 0);
                 }

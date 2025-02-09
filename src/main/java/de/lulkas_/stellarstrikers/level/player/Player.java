@@ -1,6 +1,7 @@
 package de.lulkas_.stellarstrikers.level.player;
 
 import de.lulkas_.stellarstrikers.GameObjectHandler;
+import de.lulkas_.stellarstrikers.level.MovingEntity;
 import de.lulkas_.stellarstrikers.playerData.PlayerSkillHandler;
 import de.lulkas_.stellarstrikers.level.Entity;
 import de.lulkas_.stellarstrikers.level.enemys.Boss;
@@ -11,18 +12,19 @@ import de.lulkas_.stellarstrikers.sound.SoundHandler;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends Entity {
-    private final float speed;
+public class Player extends MovingEntity {
+    private final float SPEED;
     private GameObjectHandler gameObjectHandler;
     public List<Bullet> bullets = new ArrayList<>();
     private int bulletCooldown = 0;
     public final boolean invincible;
     public PlayerSkillHandler playerSkillHandler;
     public int maxBulletCooldown = 500;
+    private boolean wasSpacePressed = false;
 
-    public Player(float speed, GameObjectHandler gameObjectHandler, float startX, float startY, boolean invincible, PlayerSkillHandler playerSkillHandler, int skin) {
-        super(53, 78, startX, startY, playerSkillHandler.getHealth(), gameObjectHandler);
-        this.speed = speed;
+    public Player(float speed, GameObjectHandler gameObjectHandler, float startX, float startY, boolean invincible, PlayerSkillHandler playerSkillHandler) {
+        super(53, 78, startX, startY, playerSkillHandler.getHealth(), gameObjectHandler, .95f, 1);
+        this.SPEED = speed;
         this.gameObjectHandler = gameObjectHandler;
         this.invincible = invincible;
         this.playerSkillHandler = playerSkillHandler;
@@ -35,36 +37,34 @@ public class Player extends Entity {
         }
         super.tick();
 
+        if(this.gameObjectHandler.getKeyboardInputs().isaPressed() && this.gameX - this.SPEED >= 0){
+            this.velocities[0] -= this.SPEED;
+        }
+        if(this.gameObjectHandler.getKeyboardInputs().isdPressed() && this.gameX + this.SPEED <= 930){
+            this.velocities[0] += this.SPEED;
+        }
+
         this.maxBulletCooldown = gameObjectHandler.playerPowerUpHandler.getMaxBulletCooldown();
-
-        if(this.gameObjectHandler.getKeyboardInputs().isaPressed() && this.gameX - this.speed >= 0){
-            this.gameX -= this.speed;
-        }
-
-        if(this.gameObjectHandler.getKeyboardInputs().isdPressed() && this.gameX + this.speed <= 930){
-            this.gameX += this.speed;
-        }
-
-        if(this.gameObjectHandler.getKeyboardInputs().isSpacePressed() && this.bulletCooldown <= 0) {
+        boolean isSpacePressed = this.gameObjectHandler.getKeyboardInputs().isSpacePressed();
+        if(isSpacePressed && this.bulletCooldown <= 0 && !wasSpacePressed) {
             this.bullets.add(new Bullet(this.gameX + this.gameWidth / 2f, this.gameY, -5.0f, 0, this, gameObjectHandler, gameObjectHandler.playerOptionsHandler.getPlayerBulletColor()));
             SoundHandler.playSound("/sounds/level/shoot_player.wav", -20f, gameObjectHandler);
             this.bulletCooldown = maxBulletCooldown;
         }
-
         if(this.bulletCooldown != 0) {
             this.bulletCooldown--;
         }
-
         updateBullets();
+        wasSpacePressed = isSpacePressed;
     }
 
     @Override
     public List<Entity> getCollideWith() {
         List<Entity> toReturn = new ArrayList<>(List.of());
-        for(Enemy enemy : gameObjectHandler.enemyWaveHandler.enemies){
+        for(Enemy enemy : gameObjectHandler.enemyHandler.enemies){
             toReturn.addAll(enemy.bullets);
         }
-        for(Boss boss : gameObjectHandler.enemyWaveHandler.bosses) {
+        for(Boss boss : gameObjectHandler.enemyHandler.bosses) {
             toReturn.addAll(boss.bombs);
         }
         return toReturn;

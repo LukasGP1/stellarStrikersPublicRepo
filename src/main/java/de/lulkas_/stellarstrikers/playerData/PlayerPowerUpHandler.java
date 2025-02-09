@@ -3,7 +3,7 @@ package de.lulkas_.stellarstrikers.playerData;
 public class PlayerPowerUpHandler {
     private int damage = 0;
     private int income = 0;
-    private int maxBulletCooldown = 50;
+    private int maxBulletCooldown = 20;
     private int damagePowerUpTicks = 0;
     private int incomePowerUpTicks = 0;
     private int maxBulletCooldownPowerUpTicks = 0;
